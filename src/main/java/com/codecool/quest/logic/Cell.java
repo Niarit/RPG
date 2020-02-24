@@ -1,6 +1,7 @@
 package com.codecool.quest.logic;
 
 import com.codecool.quest.logic.actors.Actor;
+import com.codecool.quest.logic.actors.Skeleton;
 
 public class Cell implements Drawable {
     private CellType type;
@@ -32,7 +33,16 @@ public class Cell implements Drawable {
     }
 
     public Cell getNeighbor(int dx, int dy) {
-        return gameMap.getCell(x + dx, y + dy);
+        Cell cellToMove = gameMap.getCell(x + dx, y + dy);
+        if (cellToMove.type == CellType.WALL || cellToMove.type == CellType.EMPTY){
+            return gameMap.getCell(x, y);
+        } else if (cellToMove.type == CellType.FLOOR && cellToMove.getActor() != null){
+            return gameMap.getCell(x,y);
+        } else if (x + dx < 0 && x + dx > gameMap.getWidth()-1 && y + dy < 0 && y + dy > gameMap.getHeight()-1){
+            return gameMap.getCell(x,y);
+        }
+        return cellToMove;
+
     }
 
     @Override
