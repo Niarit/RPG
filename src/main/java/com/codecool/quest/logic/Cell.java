@@ -33,15 +33,17 @@ public class Cell implements Drawable {
     }
 
     public Cell getNeighbor(int dx, int dy) {
-        Cell cellToMove = gameMap.getCell(x + dx, y + dy);
-        if (cellToMove.type == CellType.WALL || cellToMove.type == CellType.EMPTY){
-            return gameMap.getCell(x, y);
-        } else if (cellToMove.type == CellType.FLOOR && cellToMove.getActor() != null){
-            return gameMap.getCell(x,y);
-        } else if (x + dx < 0 && x + dx > gameMap.getWidth()-1 && y + dy < 0 && y + dy > gameMap.getHeight()-1){
+        try{
+            Cell cellToMove = gameMap.getCell(x + dx, y + dy);
+            if (cellToMove.type == CellType.WALL || cellToMove.type == CellType.EMPTY){
+                return gameMap.getCell(x, y);
+            } else if (cellToMove.type == CellType.FLOOR && cellToMove.getActor() != null){
+                return gameMap.getCell(x,y);
+            }
+            return cellToMove;
+        }catch (Exception e){
             return gameMap.getCell(x,y);
         }
-        return cellToMove;
 
     }
 
