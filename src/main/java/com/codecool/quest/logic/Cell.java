@@ -39,8 +39,6 @@ public class Cell implements Drawable {
                 return gameMap.getCell(x, y);
             } else if (cellToMove.type == CellType.FLOOR && cellToMove.getActor() != null){
                 return gameMap.getCell(x,y);
-            } else if (x + dx < 0 && x + dx > gameMap.getWidth()-1 && y + dy < 0 && y + dy > gameMap.getHeight()-1){
-                return gameMap.getCell(x,y);
             }
             return cellToMove;
         }catch (Exception e){
