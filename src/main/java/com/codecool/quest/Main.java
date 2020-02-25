@@ -13,15 +13,18 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+    BorderPane borderPane = new BorderPane();
     GameMap map = MapLoader.loadMap();
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,
             map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
+    Label damageLabel = new Label();
 
     public static void main(String[] args) {
         launch(args);
@@ -35,8 +38,9 @@ public class Main extends Application {
 
         ui.add(new Label("Health: "), 0, 0);
         ui.add(healthLabel, 1, 0);
+        ui.add(new Label("Damage:"),0,1);
+        ui.add(damageLabel,1,1);
 
-        BorderPane borderPane = new BorderPane();
 
         borderPane.setCenter(canvas);
         borderPane.setRight(ui);
@@ -85,5 +89,17 @@ public class Main extends Application {
             }
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
+        damageLabel.setText("" + map.getPlayer().getDamage());
+        if(map.getPlayer().getHealth() == 0){
+            gameOver();
+        }
+    }
+
+    private void gameOver() {
+        Label GameOver = new Label("Game Over");
+        GameOver.setFont(Font.font("Back to 1982", 100));
+        borderPane.setRight(null);
+        borderPane.setCenter(GameOver);
+
     }
 }

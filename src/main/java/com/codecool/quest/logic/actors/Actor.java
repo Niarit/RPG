@@ -5,11 +5,16 @@ import com.codecool.quest.logic.Drawable;
 
 public abstract class Actor implements Drawable {
     private Cell cell;
-    private int health = 10;
+    private int health;
+    private int damage;
 
-    public Actor(Cell cell) {
+
+    public Actor(Cell cell, int damage, int health) {
         this.cell = cell;
         this.cell.setActor(this);
+        this.damage = damage;
+        this.health = health;
+
     }
 
     public void move(int dx, int dy) {
@@ -19,8 +24,21 @@ public abstract class Actor implements Drawable {
         cell = nextCell;
     }
 
+
     public int getHealth() {
         return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    public int getDamage() {
+        return damage;
     }
 
     public Cell getCell() {
