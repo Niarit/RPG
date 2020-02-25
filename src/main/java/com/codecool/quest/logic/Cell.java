@@ -38,11 +38,29 @@ public class Cell implements Drawable {
             if (cellToMove.type == CellType.WALL || cellToMove.type == CellType.EMPTY){
                 return gameMap.getCell(x, y);
             } else if (cellToMove.type == CellType.FLOOR && cellToMove.getActor() != null){
+                combat(cellToMove, gameMap.getCell(x,y));
                 return gameMap.getCell(x,y);
             }
             return cellToMove;
         }catch (Exception e){
             return gameMap.getCell(x,y);
+        }
+
+    }
+
+    private void combat(Cell cellToMove, Cell playerCell) {
+//        int enemyDamage = cellToMove.getActor().getDamage();
+//        int enemyHealth = cellToMove.getActor().getHealth();
+//        int playerDamage = playerCell.getActor().getDamage();
+//        int playerHealth = playerCell.getActor().getHealth();
+
+        cellToMove.getActor().setHealth(cellToMove.getActor().getHealth() - playerCell.getActor().getDamage());
+        playerCell.getActor().setHealth(playerCell.getActor().getHealth() - cellToMove.getActor().getDamage());
+
+        System.out.println(playerCell.getActor().getHealth());
+        System.out.println(cellToMove.getActor().getHealth());
+        if(cellToMove.getActor().getHealth() <= 0){
+            cellToMove.setActor(null);
         }
 
     }
