@@ -2,10 +2,12 @@ package com.codecool.quest.logic;
 
 import com.codecool.quest.logic.actors.Actor;
 import com.codecool.quest.logic.actors.Skeleton;
+import com.codecool.quest.logic.items.Item;
 
 public class Cell implements Drawable {
     private CellType type;
     private Actor actor;
+    private Item item;
     private GameMap gameMap;
     private int x, y;
 
@@ -30,6 +32,14 @@ public class Cell implements Drawable {
 
     public Actor getActor() {
         return actor;
+    }
+
+    public void setItem(Item item){
+        this.item = item;
+    }
+
+    public Item getItem(){
+        return item;
     }
 
     public Cell getNeighbor(int dx, int dy) {
@@ -57,8 +67,6 @@ public class Cell implements Drawable {
         cellToMove.getActor().setHealth(cellToMove.getActor().getHealth() - playerCell.getActor().getDamage());
         playerCell.getActor().setHealth(playerCell.getActor().getHealth() - cellToMove.getActor().getDamage());
 
-        System.out.println(playerCell.getActor().getHealth());
-        System.out.println(cellToMove.getActor().getHealth());
         if(cellToMove.getActor().getHealth() <= 0){
             cellToMove.setActor(null);
         }
@@ -77,4 +85,5 @@ public class Cell implements Drawable {
     public int getY() {
         return y;
     }
+
 }

@@ -38,8 +38,8 @@ public class Main extends Application {
 
         ui.add(new Label("Health: "), 0, 0);
         ui.add(healthLabel, 1, 0);
-        ui.add(new Label("Damage:"),0,1);
-        ui.add(damageLabel,1,1);
+        ui.add(new Label("Damage:"), 0, 1);
+        ui.add(damageLabel, 1, 1);
 
 
         borderPane.setCenter(canvas);
@@ -69,7 +69,7 @@ public class Main extends Application {
                 refresh();
                 break;
             case RIGHT:
-                map.getPlayer().move(1,0);
+                map.getPlayer().move(1, 0);
                 refresh();
                 break;
         }
@@ -83,6 +83,8 @@ public class Main extends Application {
                 Cell cell = map.getCell(x, y);
                 if (cell.getActor() != null) {
                     Tiles.drawTile(context, cell.getActor(), x, y);
+                } else if (cell.getItem() != null) {
+                    Tiles.drawTile(context, cell.getItem(), x, y);
                 } else {
                     Tiles.drawTile(context, cell, x, y);
                 }
@@ -90,7 +92,7 @@ public class Main extends Application {
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
         damageLabel.setText("" + map.getPlayer().getDamage());
-        if(map.getPlayer().getHealth() == 0){
+        if (map.getPlayer().getHealth() == 0) {
             gameOver();
         }
     }
