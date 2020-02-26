@@ -7,13 +7,18 @@ import com.codecool.quest.logic.actors.Zalgotrax;
 import com.codecool.quest.logic.items.Armor;
 import com.codecool.quest.logic.items.Weapon;
 import com.codecool.quest.logic.path.PathWay;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.Scanner;
 
 public class MapLoader {
     public Player currentPlayer;
     private final Main main;
+    public MediaPlayer mediaPlayer;
+
     public MapLoader(Main main) {
         this.main = main;
     }
@@ -22,7 +27,12 @@ public class MapLoader {
     }
 
 
-    public GameMap loadMap(String mapFile) {
+
+    public GameMap loadMap(String mapFile, String musicFile) {
+        Media media = new Media(new File(musicFile).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);
+
         InputStream is = MapLoader.class.getResourceAsStream(mapFile);
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();

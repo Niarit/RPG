@@ -38,12 +38,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
-        String path = "/home/nia/codecool/OOP/2ndTW/RPG/src/main/resources/Hootsforce.mp3";
-        Media media = new Media(new File(path).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
-
         GridPane ui = new GridPane();
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
@@ -59,7 +53,7 @@ public class Main extends Application {
         ui.add(new Label("Number of armors: "),0,4);
         ui.add(armorLabel,1,4);
 
-        mapLoader.loadMap("/map.txt");
+        mapLoader.loadMap("/map.txt", "/home/nia/codecool/OOP/2ndTW/RPG/src/main/resources/Hootsforce.mp3");
         canvas = new Canvas(
                 map.getWidth() * Tiles.TILE_WIDTH,
                 map.getHeight() * Tiles.TILE_WIDTH);
@@ -129,13 +123,6 @@ public class Main extends Application {
 
     private void MeetYourDoom() {
         BackgroundFill myBG = new BackgroundFill(Color.BLUEVIOLET, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
-
-        mediaPlayer.stop();
-
-        String path = "/home/nia/codecool/OOP/2ndTW/RPG/src/main/resources/Universe On Fire.mp3";
-        Media media = new Media(new File(path).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
 
         Label MeetYourDoom = new Label("As you aproach the figure in front of you, the sudden realization"+ "\n" +
                                             "makes you dizzy. The eye of him burning with the flames of hatred as he looks at you"+ "\n" +
