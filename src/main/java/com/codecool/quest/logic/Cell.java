@@ -1,7 +1,7 @@
 package com.codecool.quest.logic;
 
 import com.codecool.quest.logic.actors.Actor;
-import com.codecool.quest.logic.actors.Skeleton;
+import com.codecool.quest.logic.actors.Player;
 import com.codecool.quest.logic.items.Item;
 
 public class Cell implements Drawable {
@@ -50,6 +50,8 @@ public class Cell implements Drawable {
             } else if (cellToMove.type == CellType.FLOOR && cellToMove.getActor() != null){
                 combat(cellToMove, gameMap.getCell(x,y));
                 return gameMap.getCell(x,y);
+            }else if(cellToMove.getItem() != null){
+                return cellToMove;
             }
             return cellToMove;
         }catch (Exception e){
@@ -59,11 +61,6 @@ public class Cell implements Drawable {
     }
 
     private void combat(Cell cellToMove, Cell playerCell) {
-//        int enemyDamage = cellToMove.getActor().getDamage();
-//        int enemyHealth = cellToMove.getActor().getHealth();
-//        int playerDamage = playerCell.getActor().getDamage();
-//        int playerHealth = playerCell.getActor().getHealth();
-
         cellToMove.getActor().setHealth(cellToMove.getActor().getHealth() - playerCell.getActor().getDamage());
         playerCell.getActor().setHealth(playerCell.getActor().getHealth() - cellToMove.getActor().getDamage());
 
