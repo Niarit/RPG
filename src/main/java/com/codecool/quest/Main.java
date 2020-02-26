@@ -97,9 +97,23 @@ public class Main extends Application {
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
         damageLabel.setText("" + map.getPlayer().getDamage());
-        if (map.getPlayer().getHealth() == 0) {
+        if (map.getPlayer().getHealth() <= 0) {
             gameOver();
+        } else if (map.getPlayer().getX() == 17 && map.getPlayer().getY() == 17){
+            MeetYourDoom();
         }
+    }
+
+    private void MeetYourDoom() {
+        Label MeetYourDoom = new Label("As you aproach the figure in front of you, the sudden realization"+ "\n" +
+                                            "makes you dizzy. The eye of him burning with the flames of hatred as he looks at you"+ "\n" +
+                                            "He was no other then the Warlock Zalgotrax himself!" + "\n" +
+                                            "You stand rooted in front of him for seconds, but when you made your first move" + "\n" +
+                                            "the warlock disappeared in thin air." + "\n" + "\n" +
+                                            "'Foolish Angus! You can't get me this easily!'");
+        MeetYourDoom.setFont(Font.font("Manaspace", 30));
+        borderPane.setCenter(MeetYourDoom);
+        borderPane.setRight(null);
     }
 
     private void gameOver() {
