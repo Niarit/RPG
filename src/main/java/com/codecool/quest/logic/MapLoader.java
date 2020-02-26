@@ -2,6 +2,7 @@ package com.codecool.quest.logic;
 
 import com.codecool.quest.logic.actors.Player;
 import com.codecool.quest.logic.actors.Skeleton;
+import com.codecool.quest.logic.items.Armor;
 import com.codecool.quest.logic.items.Weapon;
 
 import java.io.InputStream;
@@ -43,6 +44,10 @@ public class MapLoader {
                         case 'w':
                             cell.setType(CellType.FLOOR);
                             new Weapon(cell);
+                            break;
+                        case 'a':
+                            cell.setType(CellType.FLOOR);
+                            new Armor(cell);
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
