@@ -1,16 +1,28 @@
 package com.codecool.quest.logic;
 
+import com.codecool.quest.Main;
 import com.codecool.quest.logic.actors.Player;
 import com.codecool.quest.logic.actors.Skeleton;
 import com.codecool.quest.logic.items.Armor;
 import com.codecool.quest.logic.items.Weapon;
+import com.codecool.quest.logic.path.BasicPath;
+import com.codecool.quest.logic.path.PathWay;
 
 import java.io.InputStream;
 import java.util.Scanner;
+import java.util.concurrent.CancellationException;
 
 public class MapLoader {
-    public static GameMap loadMap() {
-        InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
+    private final Main main;
+    public MapLoader(Main main) {
+        this.main = main;
+    }
+    public void refreshStage(){
+        main.refresh();
+    }
+
+    public GameMap loadMap(String mapFile) {
+        InputStream is = MapLoader.class.getResourceAsStream(mapFile);
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();
         int height = scanner.nextInt();
@@ -49,12 +61,32 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             new Armor(cell);
                             break;
+                        case 'p':
+                            cell.setType(CellType.PATH);
+                            cell.setBasicPath(new PathWay(cell,this));
+                            break;
+                        case 'l':
+                            cell.setType(CellType.WATER);
+                            break;
+                        case 't':
+                            cell.setType(CellType.TREE);
+                            break;
+                        case 'r':
+                            cell.setType(CellType.ROCK);
+                            break;
+                        case 'b':
+                            cell.setType(CellType.BRIDGE);
+                            break;
+                        case 'z':
+                            cell.setType(CellType.ZALGOTRAX);
+                            break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
                     }
                 }
             }
         }
+        main.map = map;
         return map;
     }
 

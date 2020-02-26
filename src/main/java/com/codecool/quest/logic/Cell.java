@@ -3,6 +3,7 @@ package com.codecool.quest.logic;
 import com.codecool.quest.logic.actors.Actor;
 import com.codecool.quest.logic.actors.Skeleton;
 import com.codecool.quest.logic.items.Item;
+import com.codecool.quest.logic.path.BasicPath;
 
 public class Cell implements Drawable {
     private CellType type;
@@ -10,6 +11,7 @@ public class Cell implements Drawable {
     private Item item;
     private GameMap gameMap;
     private int x, y;
+    private BasicPath basicPath;
 
     Cell(GameMap gameMap, int x, int y, CellType type) {
         this.gameMap = gameMap;
@@ -42,6 +44,10 @@ public class Cell implements Drawable {
         return item;
     }
 
+    public BasicPath getBasicPath() {
+        return basicPath;
+    }
+
     public Cell getNeighbor(int dx, int dy) {
         try{
             Cell cellToMove = gameMap.getCell(x + dx, y + dy);
@@ -50,9 +56,11 @@ public class Cell implements Drawable {
             } else if (cellToMove.type == CellType.FLOOR && cellToMove.getActor() != null){
                 combat(cellToMove, gameMap.getCell(x,y));
                 return gameMap.getCell(x,y);
+            } else if(cellToMove.getBasicPath() != null){
+                cellToMove.getBasicPath().goTrough();
             }
             return cellToMove;
-        }catch (Exception e){
+        }catch (ArrayIndexOutOfBoundsException e){
             return gameMap.getCell(x,y);
         }
 
@@ -86,4 +94,8 @@ public class Cell implements Drawable {
         return y;
     }
 
+
+    public void setBasicPath(BasicPath basicPath) {
+        this.basicPath = basicPath;
+    }
 }

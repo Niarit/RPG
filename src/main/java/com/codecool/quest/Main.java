@@ -17,12 +17,11 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+    MapLoader mapLoader = new MapLoader(this);
     BorderPane borderPane = new BorderPane();
-    GameMap map = MapLoader.loadMap();
-    Canvas canvas = new Canvas(
-            map.getWidth() * Tiles.TILE_WIDTH,
-            map.getHeight() * Tiles.TILE_WIDTH);
-    GraphicsContext context = canvas.getGraphicsContext2D();
+    public GameMap map;
+    Canvas canvas;
+    GraphicsContext context;
     Label healthLabel = new Label();
     Label damageLabel = new Label();
 
@@ -41,6 +40,12 @@ public class Main extends Application {
         ui.add(new Label("Damage:"), 0, 1);
         ui.add(damageLabel, 1, 1);
 
+        mapLoader.loadMap("/map.txt");
+        canvas = new Canvas(
+                map.getWidth() * Tiles.TILE_WIDTH,
+                map.getHeight() * Tiles.TILE_WIDTH);
+        context = canvas.getGraphicsContext2D();
+        refresh();
 
         borderPane.setCenter(canvas);
         borderPane.setRight(ui);
@@ -75,7 +80,7 @@ public class Main extends Application {
         }
     }
 
-    private void refresh() {
+    public void refresh() {
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (int x = 0; x < map.getWidth(); x++) {

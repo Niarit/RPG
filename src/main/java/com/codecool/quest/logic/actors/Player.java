@@ -12,5 +12,4 @@ public class Player extends Actor {
         return "player";
     }
 
-
 }
