@@ -27,6 +27,9 @@ public class MapLoader {
     }
 
 
+    public MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
+    }
 
     public GameMap loadMap(String mapFile, String musicFile) {
         Media media = new Media(new File(musicFile).toURI().toString());

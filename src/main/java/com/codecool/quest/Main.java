@@ -54,6 +54,7 @@ public class Main extends Application {
         ui.add(armorLabel,1,4);
 
         mapLoader.loadMap("/map.txt", "/home/nia/codecool/OOP/2ndTW/RPG/src/main/resources/Hootsforce.mp3");
+
         canvas = new Canvas(
                 map.getWidth() * Tiles.TILE_WIDTH,
                 map.getHeight() * Tiles.TILE_WIDTH);
@@ -68,7 +69,7 @@ public class Main extends Application {
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
 
-        primaryStage.setTitle("Codecool Quest");
+        primaryStage.setTitle("Gloryhammer: The Quest For Glory");
         primaryStage.show();
     }
 
@@ -122,7 +123,13 @@ public class Main extends Application {
     }
 
     private void MeetYourDoom() {
-        BackgroundFill myBG = new BackgroundFill(Color.BLUEVIOLET, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
+        mapLoader.getMediaPlayer().stop();
+        String path = "/home/nia/codecool/OOP/2ndTW/RPG/src/main/resources/Universe On Fire.mp3";
+        Media media = new Media(new File(path).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);
+
+        BackgroundFill myBG = new BackgroundFill(Color.BLACK, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
 
         Label MeetYourDoom = new Label("As you aproach the figure in front of you, the sudden realization"+ "\n" +
                                             "makes you dizzy. The eye of him burning with the flames of hatred as he looks at you"+ "\n" +
@@ -135,12 +142,12 @@ public class Main extends Application {
         borderPane.setCenter(MeetYourDoom);
         borderPane.setRight(null);
         borderPane.setBackground(new Background(myBG));
-        MeetYourDoom.setTextFill(Color.LAWNGREEN);
+        MeetYourDoom.setTextFill(Color.WHITE);
     }
 
     private void gameOver() {
-        BackgroundFill myBG = new BackgroundFill(Color.BLUEVIOLET, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
-        mediaPlayer.stop();
+        mapLoader.getMediaPlayer().stop();
+        BackgroundFill myBG = new BackgroundFill(Color.BLACK, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
         String path = "/home/nia/codecool/OOP/2ndTW/RPG/src/main/resources/Magic Dragon.mp3";
         Media media = new Media(new File(path).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
@@ -151,6 +158,6 @@ public class Main extends Application {
         borderPane.setRight(null);
         borderPane.setCenter(GameOver);
         borderPane.setBackground(new Background(myBG));
-        GameOver.setTextFill(Color.LAWNGREEN);
+        GameOver.setTextFill(Color.WHITE);
     }
 }
