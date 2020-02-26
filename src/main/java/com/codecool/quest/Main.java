@@ -24,6 +24,9 @@ public class Main extends Application {
     GraphicsContext context;
     Label healthLabel = new Label();
     Label damageLabel = new Label();
+    Label weaponLabel = new Label();
+    Label armorLabel = new Label();
+    Label emptyLabel = new Label();
 
     public static void main(String[] args) {
         launch(args);
@@ -39,6 +42,12 @@ public class Main extends Application {
         ui.add(healthLabel, 1, 0);
         ui.add(new Label("Damage:"), 0, 1);
         ui.add(damageLabel, 1, 1);
+        ui.add(new Label(""),0,2);
+        ui.add(emptyLabel,1,2);
+        ui.add(new Label("Number of weapons: "),0,3);
+        ui.add(weaponLabel,1,3);
+        ui.add(new Label("Number of armors: "),0,4);
+        ui.add(armorLabel,1,4);
 
         mapLoader.loadMap("/map.txt");
         canvas = new Canvas(
@@ -97,6 +106,10 @@ public class Main extends Application {
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
         damageLabel.setText("" + map.getPlayer().getDamage());
+        weaponLabel.setText(""+ (map.getPlayer().getDamage()/5 -1));
+        if (map.getPlayer().getHealth()/5-1>=0) {
+            armorLabel.setText("" + (map.getPlayer().getHealth() / 5 - 1));
+        }
         if (map.getPlayer().getHealth() <= 0) {
             gameOver();
         } else if (map.getPlayer().getX() == 17 && map.getPlayer().getY() == 17){
