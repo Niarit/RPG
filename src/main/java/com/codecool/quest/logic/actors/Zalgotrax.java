@@ -10,6 +10,6 @@ public class Zalgotrax extends Actor {
 
     @Override
     public String getTileName() {
-        return null;
+        return "zalgotrax";
     }
 }

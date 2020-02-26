@@ -3,6 +3,7 @@ package com.codecool.quest.logic;
 import com.codecool.quest.Main;
 import com.codecool.quest.logic.actors.Player;
 import com.codecool.quest.logic.actors.Skeleton;
+import com.codecool.quest.logic.actors.Zalgotrax;
 import com.codecool.quest.logic.items.Armor;
 import com.codecool.quest.logic.items.Weapon;
 import com.codecool.quest.logic.path.PathWay;
@@ -86,7 +87,8 @@ public class MapLoader {
                             cell.setType(CellType.BRIDGE);
                             break;
                         case 'z':
-                            cell.setType(CellType.ZALGOTRAX);
+                            cell.setType(CellType.FLOOR);
+                            new Zalgotrax(cell);
                             break;
                         case '_':
                             cell.setType(CellType.WINE);
