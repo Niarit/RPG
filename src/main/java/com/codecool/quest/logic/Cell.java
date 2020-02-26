@@ -67,8 +67,6 @@ public class Cell implements Drawable {
         cellToMove.getActor().setHealth(cellToMove.getActor().getHealth() - playerCell.getActor().getDamage());
         playerCell.getActor().setHealth(playerCell.getActor().getHealth() - cellToMove.getActor().getDamage());
 
-        System.out.println(playerCell.getActor().getHealth());
-        System.out.println(cellToMove.getActor().getHealth());
         if(cellToMove.getActor().getHealth() <= 0){
             cellToMove.setActor(null);
         }
