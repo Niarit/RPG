@@ -51,13 +51,16 @@ public class Cell implements Drawable {
     public Cell getNeighbor(int dx, int dy) {
         try{
             Cell cellToMove = gameMap.getCell(x + dx, y + dy);
-            if (cellToMove.type == CellType.WALL || cellToMove.type == CellType.EMPTY){
+            if (cellToMove.type == CellType.WALL || cellToMove.type == CellType.EMPTY || cellToMove.type == CellType.WINE || cellToMove.type == CellType.RUINED_WALL_PIECE || cellToMove.type == CellType.ROCK || cellToMove.type == CellType.TREE){
                 return gameMap.getCell(x, y);
             } else if (cellToMove.type == CellType.FLOOR && cellToMove.getActor() != null){
                 combat(cellToMove, gameMap.getCell(x,y));
                 return gameMap.getCell(x,y);
             } else if(cellToMove.getBasicPath() != null){
                 cellToMove.getBasicPath().goTrough();
+            } else if(cellToMove.getTileName().equals("water")) {
+                gameMap.getCell(x, y).getActor().setHealth(gameMap.getCell(x, y).getActor().getHealth() - 5);
+                return cellToMove;
             }
             return cellToMove;
         }catch (ArrayIndexOutOfBoundsException e){

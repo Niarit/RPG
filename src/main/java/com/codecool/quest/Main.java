@@ -97,7 +97,7 @@ public class Main extends Application {
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
         damageLabel.setText("" + map.getPlayer().getDamage());
-        if (map.getPlayer().getHealth() == 0) {
+        if (map.getPlayer().getHealth() <= 0) {
             gameOver();
         }
     }

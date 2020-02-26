@@ -5,14 +5,13 @@ import com.codecool.quest.logic.actors.Player;
 import com.codecool.quest.logic.actors.Skeleton;
 import com.codecool.quest.logic.items.Armor;
 import com.codecool.quest.logic.items.Weapon;
-import com.codecool.quest.logic.path.BasicPath;
 import com.codecool.quest.logic.path.PathWay;
 
 import java.io.InputStream;
 import java.util.Scanner;
-import java.util.concurrent.CancellationException;
 
 public class MapLoader {
+    public Player currentPlayer;
     private final Main main;
     public MapLoader(Main main) {
         this.main = main;
@@ -20,6 +19,7 @@ public class MapLoader {
     public void refreshStage(){
         main.refresh();
     }
+
 
     public GameMap loadMap(String mapFile) {
         InputStream is = MapLoader.class.getResourceAsStream(mapFile);
@@ -51,7 +51,15 @@ public class MapLoader {
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
-                            map.setPlayer(new Player(cell));
+                            if(currentPlayer == null) {
+                                currentPlayer = new Player(cell);
+                            }else {
+                                Player player = new Player(cell);
+                                player.setHealth(currentPlayer.getHealth());
+                                player.setDamage(currentPlayer.getDamage());
+                                currentPlayer = player;
+                            }
+                            map.setPlayer(currentPlayer);
                             break;
                         case 'w':
                             cell.setType(CellType.FLOOR);
@@ -79,6 +87,12 @@ public class MapLoader {
                             break;
                         case 'z':
                             cell.setType(CellType.ZALGOTRAX);
+                            break;
+                        case '_':
+                            cell.setType(CellType.WINE);
+                            break;
+                        case '/':
+                            cell.setType(CellType.RUINED_WALL_PIECE);
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");

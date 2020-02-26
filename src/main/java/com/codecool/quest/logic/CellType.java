@@ -9,7 +9,9 @@ public enum CellType {
     BRIDGE("bridge"),
     TREE("tree"),
     ROCK("rock"),
-    ZALGOTRAX("zalgotrax");
+    ZALGOTRAX("zalgotrax"),
+    RUINED_WALL_PIECE("ruined_wall_piece"),
+    WINE("wine");
 
     private final String tileName;
 
