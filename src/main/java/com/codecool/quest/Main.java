@@ -17,12 +17,11 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+    MapLoader mapLoader = new MapLoader(this);
     BorderPane borderPane = new BorderPane();
-    GameMap map = MapLoader.loadMap();
-    Canvas canvas = new Canvas(
-            map.getWidth() * Tiles.TILE_WIDTH,
-            map.getHeight() * Tiles.TILE_WIDTH);
-    GraphicsContext context = canvas.getGraphicsContext2D();
+    public GameMap map;
+    Canvas canvas;
+    GraphicsContext context;
     Label healthLabel = new Label();
     Label damageLabel = new Label();
     Label weaponLabel = new Label();
@@ -50,6 +49,12 @@ public class Main extends Application {
         ui.add(new Label("Number of armors: "),0,4);
         ui.add(armorLabel,1,4);
 
+        mapLoader.loadMap("/map.txt");
+        canvas = new Canvas(
+                map.getWidth() * Tiles.TILE_WIDTH,
+                map.getHeight() * Tiles.TILE_WIDTH);
+        context = canvas.getGraphicsContext2D();
+        refresh();
 
         borderPane.setCenter(canvas);
         borderPane.setRight(ui);
@@ -84,7 +89,7 @@ public class Main extends Application {
         }
     }
 
-    private void refresh() {
+    public void refresh() {
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (int x = 0; x < map.getWidth(); x++) {
@@ -105,9 +110,23 @@ public class Main extends Application {
         if (map.getPlayer().getHealth()/5-1>=0) {
             armorLabel.setText("" + (map.getPlayer().getHealth() / 5 - 1));
         }
-        if (map.getPlayer().getHealth() == 0) {
+        if (map.getPlayer().getHealth() <= 0) {
             gameOver();
+        } else if (map.getPlayer().getX() == 17 && map.getPlayer().getY() == 17){
+            MeetYourDoom();
         }
+    }
+
+    private void MeetYourDoom() {
+        Label MeetYourDoom = new Label("As you aproach the figure in front of you, the sudden realization"+ "\n" +
+                                            "makes you dizzy. The eye of him burning with the flames of hatred as he looks at you"+ "\n" +
+                                            "He was no other then the Warlock Zalgotrax himself!" + "\n" +
+                                            "You stand rooted in front of him for seconds, but when you made your first move" + "\n" +
+                                            "the warlock disappeared in thin air." + "\n" + "\n" +
+                                            "'Foolish Angus! You can't get me this easily!'");
+        MeetYourDoom.setFont(Font.font("Manaspace", 30));
+        borderPane.setCenter(MeetYourDoom);
+        borderPane.setRight(null);
     }
 
     private void gameOver() {
