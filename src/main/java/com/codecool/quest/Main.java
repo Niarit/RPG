@@ -3,7 +3,6 @@ package com.codecool.quest;
 import com.codecool.quest.logic.Cell;
 import com.codecool.quest.logic.GameMap;
 import com.codecool.quest.logic.MapLoader;
-import com.codecool.quest.logic.items.Item;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -18,16 +17,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import javax.naming.Context;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Main extends Application {
     MapLoader mapLoader = new MapLoader(this);
     BorderPane borderPane = new BorderPane();
     public GameMap map;
     Canvas canvasMain;
-    ArrayList<String> items;
+    public static ArrayList<String> items = new ArrayList<>();
     Canvas canvasInv;
     GraphicsContext contextMain;
     GraphicsContext contextInv;
@@ -36,7 +33,6 @@ public class Main extends Application {
     Label weaponLabel = new Label();
     Label armorLabel = new Label();
     Label emptyLabel = new Label();
-    public Item item;
 
     public static void main(String[] args) {
         launch(args);
@@ -109,6 +105,7 @@ public class Main extends Application {
     }
 
     public void refresh() {
+        int invCount = 0;
         contextMain.setFill(Color.BLACK);
         contextMain.fillRect(0, 0, canvasMain.getWidth(), canvasMain.getHeight());
         for (int x = 0; x < map.getWidth(); x++) {
@@ -123,9 +120,9 @@ public class Main extends Application {
                 }
             }
         }
-        items = item.getItems();
-        for (String item: items){
-            Tiles.getTileForItem(contextInv, item, 3, 3);
+        for (String word: items){
+            Tiles.getTileForItem(contextInv, word, 2, invCount);
+            invCount++;
         }
 
         healthLabel.setText("" + map.getPlayer().getHealth());
