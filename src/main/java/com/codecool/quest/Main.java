@@ -69,7 +69,7 @@ public class Main extends Application {
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
 
-        primaryStage.setTitle("Gloryhammer: The Quest For Glory");
+        primaryStage.setTitle("Gloryhammer: Rise of the Chaos Wizard");
         primaryStage.show();
     }
 
@@ -132,11 +132,11 @@ public class Main extends Application {
         BackgroundFill myBG = new BackgroundFill(Color.BLACK, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
 
         Label MeetYourDoom = new Label("As you aproach the figure in front of you, the sudden realization"+ "\n" +
-                                            "makes you dizzy. The eye of him burning with the flames of hatred as he looks at you"+ "\n" +
-                                            "He was no other then the Warlock Zalgotrax himself!" + "\n" +
+                                            "makes you dizzy. His eyes are burning with the flames of hatred as he looks at you"+ "\n" +
+                                            "He was no other then the Warlock Zargotrax himself!" + "\n" +
                                             "You stand rooted in front of him for seconds, but when you made your first move" + "\n" +
-                                            "the warlock disappeared in thin air." + "\n" + "\n" +
-                                            "'Foolish Angus! You can't get me this easily!'" + "\n" + "\n" +
+                                            "the warlock disappears in thin air." + "\n" + "\n" +
+                                            "'Foolish mortal! You can't get me this easily!'" + "\n" + "\n" +
                                             "It seems your journey is not over yet!");
         MeetYourDoom.setFont(Font.font("Manaspace", 30));
         borderPane.setCenter(MeetYourDoom);
