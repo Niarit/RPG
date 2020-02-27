@@ -1,6 +1,5 @@
 package com.codecool.quest.logic.path;
 
-import com.codecool.quest.Main;
 import com.codecool.quest.logic.Cell;
 import com.codecool.quest.logic.MapLoader;
 
