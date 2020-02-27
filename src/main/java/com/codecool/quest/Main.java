@@ -10,11 +10,14 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
+import java.io.File;
 
 public class Main extends Application {
     MapLoader mapLoader = new MapLoader(this);
@@ -22,6 +25,7 @@ public class Main extends Application {
     public GameMap map;
     Canvas canvas;
     GraphicsContext context;
+    MediaPlayer mediaPlayer;
     Label healthLabel = new Label();
     Label damageLabel = new Label();
     Label weaponLabel = new Label();
@@ -49,7 +53,8 @@ public class Main extends Application {
         ui.add(new Label("Number of armors: "),0,4);
         ui.add(armorLabel,1,4);
 
-        mapLoader.loadMap("/map.txt");
+        mapLoader.loadMap("/map.txt", "/home/nia/codecool/OOP/2ndTW/RPG/src/main/resources/Hootsforce.mp3");
+
         canvas = new Canvas(
                 map.getWidth() * Tiles.TILE_WIDTH,
                 map.getHeight() * Tiles.TILE_WIDTH);
@@ -64,7 +69,7 @@ public class Main extends Application {
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
 
-        primaryStage.setTitle("Codecool Quest");
+        primaryStage.setTitle("Gloryhammer: The Quest For Glory");
         primaryStage.show();
     }
 
@@ -118,22 +123,41 @@ public class Main extends Application {
     }
 
     private void MeetYourDoom() {
+        mapLoader.getMediaPlayer().stop();
+        String path = "/home/nia/codecool/OOP/2ndTW/RPG/src/main/resources/Universe On Fire.mp3";
+        Media media = new Media(new File(path).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);
+
+        BackgroundFill myBG = new BackgroundFill(Color.BLACK, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
+
         Label MeetYourDoom = new Label("As you aproach the figure in front of you, the sudden realization"+ "\n" +
                                             "makes you dizzy. The eye of him burning with the flames of hatred as he looks at you"+ "\n" +
                                             "He was no other then the Warlock Zalgotrax himself!" + "\n" +
                                             "You stand rooted in front of him for seconds, but when you made your first move" + "\n" +
                                             "the warlock disappeared in thin air." + "\n" + "\n" +
-                                            "'Foolish Angus! You can't get me this easily!'");
+                                            "'Foolish Angus! You can't get me this easily!'" + "\n" + "\n" +
+                                            "It seems your journey is not over yet!");
         MeetYourDoom.setFont(Font.font("Manaspace", 30));
         borderPane.setCenter(MeetYourDoom);
         borderPane.setRight(null);
+        borderPane.setBackground(new Background(myBG));
+        MeetYourDoom.setTextFill(Color.WHITE);
     }
 
     private void gameOver() {
+        mapLoader.getMediaPlayer().stop();
+        BackgroundFill myBG = new BackgroundFill(Color.BLACK, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
+        String path = "/home/nia/codecool/OOP/2ndTW/RPG/src/main/resources/Magic Dragon.mp3";
+        Media media = new Media(new File(path).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);
+
         Label GameOver = new Label("Game Over");
         GameOver.setFont(Font.font("Back to 1982", 100));
         borderPane.setRight(null);
         borderPane.setCenter(GameOver);
-
+        borderPane.setBackground(new Background(myBG));
+        GameOver.setTextFill(Color.WHITE);
     }
 }
