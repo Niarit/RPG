@@ -44,6 +44,7 @@ public class Tiles {
         tileMap.put("ruined_wall_piece", new Tile(1,11));
         tileMap.put("false_wall", new Tile(1,2));
         tileMap.put("wine", new Tile(1,2));
+        tileMap.put("Gloryhammer", new Tile(5,29));
     }
 
     public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {

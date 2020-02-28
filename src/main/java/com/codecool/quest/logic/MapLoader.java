@@ -5,6 +5,7 @@ import com.codecool.quest.logic.actors.Player;
 import com.codecool.quest.logic.actors.Skeleton;
 import com.codecool.quest.logic.actors.Zalgotrax;
 import com.codecool.quest.logic.items.Armor;
+import com.codecool.quest.logic.items.Gloryhammer;
 import com.codecool.quest.logic.items.Weapon;
 import com.codecool.quest.logic.path.PathWay;
 import javafx.scene.media.Media;
@@ -111,6 +112,10 @@ public class MapLoader {
                             break;
                         case 'f':
                             cell.setType(CellType.FALSE_WALL);
+                            break;
+                        case 'G':
+                            cell.setType(CellType.FLOOR);
+                            new Gloryhammer(cell);
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");

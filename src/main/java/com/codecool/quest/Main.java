@@ -119,7 +119,24 @@ public class Main extends Application {
             gameOver();
         } else if (map.getPlayer().getX() == 17 && map.getPlayer().getY() == 17){
             MeetYourDoom();
+        } else if(map.getPlayer().getX() == 17 && map.getPlayer().getY() == 18){
+            LegendaryBattle();
         }
+    }
+
+    private void LegendaryBattle() {
+        BackgroundFill myBG = new BackgroundFill(Color.BLACK, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
+        Label LegendaryBattle =  new Label("After the stealth blow Zargotrax fell to the ground cursing." + "\n" +
+                                                "The hero was about to finish him out, when the warlock managed to cast" + "\n" +
+                                                "one last spell. The hammer landed on the ground, where the warlock was" + "\n" +
+                                                "hitting no more the air in its way" + "\n"+ "\n" +
+                                                "You maybe strong, but not strong enough mortal! Our battle isn't over yet!" +"\n"+"\n"+
+                                                "It seems your journey is not over yet!");
+        borderPane.setRight(null);
+        borderPane.setCenter(LegendaryBattle);
+        borderPane.setBackground(new Background(myBG));
+        LegendaryBattle.setFont(Font.font("Manaspace", 30));
+        LegendaryBattle.setTextFill(Color.WHITE);
     }
 
     private void MeetYourDoom() {
