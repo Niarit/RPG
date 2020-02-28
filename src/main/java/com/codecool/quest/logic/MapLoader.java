@@ -109,6 +109,9 @@ public class MapLoader {
                         case '/':
                             cell.setType(CellType.RUINED_WALL_PIECE);
                             break;
+                        case 'f':
+                            cell.setType(CellType.FALSE_WALL);
+                            break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
                     }
