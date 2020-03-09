@@ -1,5 +1,6 @@
 package com.codecool.quest.logic.items;
 
+import com.codecool.quest.Main;
 import com.codecool.quest.logic.Cell;
 import com.codecool.quest.logic.actors.Player;
 
@@ -12,6 +13,7 @@ public class Armor extends Item {
     @Override
     public void pickUp(Player player) {
         player.setHealth(player.getHealth()+health);
+        Main.items.add("armor");
         super.pickUp(player);
     }
 

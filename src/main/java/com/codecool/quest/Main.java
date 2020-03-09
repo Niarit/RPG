@@ -11,6 +11,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -19,6 +22,8 @@ import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
 
+import java.util.ArrayList;
+
 public class Main extends Application {
     MapLoader mapLoader = new MapLoader(this);
     BorderPane borderPane = new BorderPane();
@@ -26,6 +31,11 @@ public class Main extends Application {
     Canvas canvas;
     GraphicsContext context;
     MediaPlayer mediaPlayer;
+    Canvas canvasMain;
+    public static ArrayList<String> items = new ArrayList<>();
+    Canvas canvasInv;
+    GraphicsContext contextMain;
+    GraphicsContext contextInv;
     Label healthLabel = new Label();
     Label damageLabel = new Label();
     Label weaponLabel = new Label();
@@ -36,9 +46,11 @@ public class Main extends Application {
         launch(args);
     }
 
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         GridPane ui = new GridPane();
+
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
 
@@ -52,17 +64,24 @@ public class Main extends Application {
         ui.add(weaponLabel,1,3);
         ui.add(new Label("Number of armors: "),0,4);
         ui.add(armorLabel,1,4);
+        canvasInv = new Canvas(
+                200,
+                500);
+        contextInv = canvasInv.getGraphicsContext2D();
+
 
         mapLoader.loadMap("/map.txt", "/home/kalnaipeter/IdeaProjects/RPG/src/main/resources/Hootsforce.mp3");
 
-        canvas = new Canvas(
+        canvasMain = new Canvas(
                 map.getWidth() * Tiles.TILE_WIDTH,
                 map.getHeight() * Tiles.TILE_WIDTH);
-        context = canvas.getGraphicsContext2D();
+        contextMain = canvasMain.getGraphicsContext2D();
         refresh();
 
-        borderPane.setCenter(canvas);
-        borderPane.setRight(ui);
+
+        VBox vbox = new VBox(ui,canvasInv);
+        borderPane.setCenter(canvasMain);
+        borderPane.setRight(vbox);
 
         Scene scene = new Scene(borderPane);
         primaryStage.setScene(scene);
@@ -95,20 +114,26 @@ public class Main extends Application {
     }
 
     public void refresh() {
-        context.setFill(Color.BLACK);
-        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        int invCount = 0;
+        contextMain.setFill(Color.BLACK);
+        contextMain.fillRect(0, 0, canvasMain.getWidth(), canvasMain.getHeight());
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
                 Cell cell = map.getCell(x, y);
                 if (cell.getActor() != null) {
-                    Tiles.drawTile(context, cell.getActor(), x, y);
+                    Tiles.drawTile(contextMain, cell.getActor(), x, y);
                 } else if (cell.getItem() != null) {
-                    Tiles.drawTile(context, cell.getItem(), x, y);
+                    Tiles.drawTile(contextMain, cell.getItem(), x, y);
                 } else {
-                    Tiles.drawTile(context, cell, x, y);
+                    Tiles.drawTile(contextMain, cell, x, y);
                 }
             }
         }
+        for (String word: items){
+            Tiles.getTileForItem(contextInv, word, 2, invCount);
+            invCount++;
+        }
+
         healthLabel.setText("" + map.getPlayer().getHealth());
         damageLabel.setText("" + map.getPlayer().getDamage());
         weaponLabel.setText(""+ (map.getPlayer().getDamage()/5 -1));
