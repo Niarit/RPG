@@ -27,14 +27,32 @@ public class Tiles {
         tileMap.put("empty", new Tile(0, 0));
         tileMap.put("wall", new Tile(10, 17));
         tileMap.put("floor", new Tile(2, 0));
-        tileMap.put("player", new Tile(27, 0));
+        tileMap.put("player1", new Tile(25, 0));
+        tileMap.put("player2", new Tile(26, 0));
+        tileMap.put("player3", new Tile(27, 0));
+        tileMap.put("player4", new Tile(28, 0));
+        tileMap.put("player5", new Tile(31, 0));
         tileMap.put("skeleton", new Tile(29, 6));
         tileMap.put("weapon", new Tile(5,29));
         tileMap.put("armor",new Tile(1,23));
+        tileMap.put("path",new Tile(11,1));
+        tileMap.put("water", new Tile(8,4));
+        tileMap.put("bridge", new Tile(7,5));
+        tileMap.put("tree", new Tile(6,2));
+        tileMap.put("rock", new Tile(5,2));
+        tileMap.put("zalgotrax", new Tile(31,1));
+        tileMap.put("ruined_wall_piece", new Tile(1,11));
+        tileMap.put("wine", new Tile(1,2));
     }
 
     public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {
         Tile tile = tileMap.get(d.getTileName());
+        context.drawImage(tileset, tile.x, tile.y, tile.w, tile.h,
+                x * TILE_WIDTH, y * TILE_WIDTH, TILE_WIDTH, TILE_WIDTH);
+    }
+
+    public static void getTileForItem(GraphicsContext context, String t, int x, int y) {
+        Tile tile = tileMap.get(t);
         context.drawImage(tileset, tile.x, tile.y, tile.w, tile.h,
                 x * TILE_WIDTH, y * TILE_WIDTH, TILE_WIDTH, TILE_WIDTH);
     }

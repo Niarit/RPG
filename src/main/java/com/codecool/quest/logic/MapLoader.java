@@ -1,16 +1,29 @@
 package com.codecool.quest.logic;
 
+import com.codecool.quest.Main;
 import com.codecool.quest.logic.actors.Player;
 import com.codecool.quest.logic.actors.Skeleton;
+import com.codecool.quest.logic.actors.Zalgotrax;
 import com.codecool.quest.logic.items.Armor;
 import com.codecool.quest.logic.items.Weapon;
+import com.codecool.quest.logic.path.PathWay;
 
 import java.io.InputStream;
 import java.util.Scanner;
 
 public class MapLoader {
-    public static GameMap loadMap() {
-        InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
+    public Player currentPlayer;
+    private final Main main;
+    public MapLoader(Main main) {
+        this.main = main;
+    }
+    public void refreshStage(){
+        main.refresh();
+    }
+
+
+    public GameMap loadMap(String mapFile) {
+        InputStream is = MapLoader.class.getResourceAsStream(mapFile);
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();
         int height = scanner.nextInt();
@@ -39,7 +52,15 @@ public class MapLoader {
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
-                            map.setPlayer(new Player(cell));
+                            if(currentPlayer == null) {
+                                currentPlayer = new Player(cell);
+                            }else {
+                                Player player = new Player(cell);
+                                player.setHealth(currentPlayer.getHealth());
+                                player.setDamage(currentPlayer.getDamage());
+                                currentPlayer = player;
+                            }
+                            map.setPlayer(currentPlayer);
                             break;
                         case 'w':
                             cell.setType(CellType.FLOOR);
@@ -49,12 +70,39 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             new Armor(cell);
                             break;
+                        case 'p':
+                            cell.setType(CellType.PATH);
+                            cell.setBasicPath(new PathWay(cell,this));
+                            break;
+                        case 'l':
+                            cell.setType(CellType.WATER);
+                            break;
+                        case 't':
+                            cell.setType(CellType.TREE);
+                            break;
+                        case 'r':
+                            cell.setType(CellType.ROCK);
+                            break;
+                        case 'b':
+                            cell.setType(CellType.BRIDGE);
+                            break;
+                        case 'z':
+                            cell.setType(CellType.FLOOR);
+                            new Zalgotrax(cell);
+                            break;
+                        case '_':
+                            cell.setType(CellType.WINE);
+                            break;
+                        case '/':
+                            cell.setType(CellType.RUINED_WALL_PIECE);
+                            break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
                     }
                 }
             }
         }
+        main.map = map;
         return map;
     }
 
