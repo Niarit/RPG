@@ -3,6 +3,8 @@ package com.codecool.quest.logic.actors;
 import com.codecool.quest.logic.Cell;
 import com.codecool.quest.logic.Drawable;
 
+import java.util.Random;
+
 public abstract class Actor implements Drawable {
     private Cell cell;
     private int health;
@@ -55,4 +57,5 @@ public abstract class Actor implements Drawable {
     public int getY() {
         return cell.getY();
     }
+
 }
