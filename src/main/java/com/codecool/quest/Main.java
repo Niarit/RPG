@@ -18,6 +18,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
+import java.util.Random;
 
 public class Main extends Application {
     MapLoader mapLoader = new MapLoader(this);
@@ -31,6 +32,12 @@ public class Main extends Application {
     Label weaponLabel = new Label();
     Label armorLabel = new Label();
     Label emptyLabel = new Label();
+    int[][] possibleMovements = {{0,-1},{0,1},{-1,0},{1,0}};
+
+    public static int[] getRandomDirection(int[][] list){
+        Random random = new Random();
+        return list[random.nextInt(4)];
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -77,18 +84,30 @@ public class Main extends Application {
         switch (keyEvent.getCode()) {
             case UP:
                 map.getPlayer().move(0, -1);
+                for (int i = 0; i < map.getAllSkeletons().size(); i++) {
+                    map.getAllSkeletons().get(i).move(getRandomDirection(possibleMovements)[0],getRandomDirection(possibleMovements)[1]);
+                }
                 refresh();
                 break;
             case DOWN:
                 map.getPlayer().move(0, 1);
+                for (int i = 0; i < map.getAllSkeletons().size(); i++) {
+                    map.getAllSkeletons().get(i).move(getRandomDirection(possibleMovements)[0],getRandomDirection(possibleMovements)[1]);
+                }
                 refresh();
                 break;
             case LEFT:
                 map.getPlayer().move(-1, 0);
+                for (int i = 0; i < map.getAllSkeletons().size(); i++) {
+                    map.getAllSkeletons().get(i).move(getRandomDirection(possibleMovements)[0],getRandomDirection(possibleMovements)[1]);
+                }
                 refresh();
                 break;
             case RIGHT:
                 map.getPlayer().move(1, 0);
+                for (int i = 0; i < map.getAllSkeletons().size(); i++) {
+                    map.getAllSkeletons().get(i).move(getRandomDirection(possibleMovements)[0],getRandomDirection(possibleMovements)[1]);
+                }
                 refresh();
                 break;
         }
