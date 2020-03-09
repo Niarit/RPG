@@ -58,7 +58,7 @@ public class Main extends Application {
         ui.add(armorLabel,1,4);
         canvasInv = new Canvas(
                 200,
-                200);
+                500);
         contextInv = canvasInv.getGraphicsContext2D();
 
 
