@@ -18,6 +18,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
+import java.util.Random;
 
 public class Main extends Application {
     MapLoader mapLoader = new MapLoader(this);
@@ -31,9 +32,16 @@ public class Main extends Application {
     Label weaponLabel = new Label();
     Label armorLabel = new Label();
     Label emptyLabel = new Label();
+    int[][] possibleMovements = {{0,-1},{0,1},{-1,0},{1,0}};
+    Random randomChance = new Random();
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public static int[] getRandomDirection(int[][] list){
+        Random random = new Random();
+        return list[random.nextInt(4)];
     }
 
     @Override
@@ -77,20 +85,38 @@ public class Main extends Application {
         switch (keyEvent.getCode()) {
             case UP:
                 map.getPlayer().move(0, -1);
+                monsterMove();
                 refresh();
                 break;
             case DOWN:
                 map.getPlayer().move(0, 1);
+                monsterMove();
                 refresh();
                 break;
             case LEFT:
                 map.getPlayer().move(-1, 0);
+                monsterMove();
                 refresh();
                 break;
             case RIGHT:
                 map.getPlayer().move(1, 0);
+                monsterMove();
                 refresh();
                 break;
+        }
+    }
+    public void monsterMove() {
+        if(randomChance.nextInt(100) <= 20) {
+            for (int i = 0; i < map.getAllSkeletons().size(); i++) {
+                if(map.getAllSkeletons().get(i).getHealth() <= 0){
+                    System.out.println("DEAD");
+                    map.getAllSkeletons().get(i).setHealth(0);
+                    map.getAllSkeletons().remove(i);
+                    System.out.println("REMOVED");
+                }else{
+                    map.getAllSkeletons().get(i).move(getRandomDirection(possibleMovements)[0],getRandomDirection(possibleMovements)[1]);
+                }
+            }
         }
     }
 
