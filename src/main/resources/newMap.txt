@@ -1,6 +1,6 @@
 25 20
 _________fffffffffffff___
-/...r...r.ll.rr..r.t..G./
+/k..r...r.ll.rr..r.t..G./
 /..r......llr.r.r..t..../
 /.....r...ll...s...ttttt/
 /.......r.ll............/

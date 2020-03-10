@@ -28,8 +28,6 @@ public class Main extends Application {
     MapLoader mapLoader = new MapLoader(this);
     BorderPane borderPane = new BorderPane();
     public GameMap map;
-    Canvas canvas;
-    GraphicsContext context;
     MediaPlayer mediaPlayer;
     Canvas canvasMain;
     public static ArrayList<String> items = new ArrayList<>();
@@ -114,7 +112,9 @@ public class Main extends Application {
     }
 
     public void refresh() {
-        int invCount = 0;
+        int invCountX = 1;
+        int invCountY = 0;
+        int itemCounter = 0;
         contextMain.setFill(Color.BLACK);
         contextMain.fillRect(0, 0, canvasMain.getWidth(), canvasMain.getHeight());
         for (int x = 0; x < map.getWidth(); x++) {
@@ -129,9 +129,20 @@ public class Main extends Application {
                 }
             }
         }
-        for (String word: items){
-            Tiles.getTileForItem(contextInv, word, 2, invCount);
-            invCount++;
+        while (invCountY < 3) {
+            if (itemCounter < items.size()) {
+                Tiles.getTileForItem(contextInv, items.get(itemCounter), invCountX, invCountY);
+                itemCounter++;
+            } else {
+                Tiles.getTileForItem(contextInv, "empty", invCountX, invCountY);
+            }
+            if (invCountX < 3) {
+                invCountX++;
+            } else {
+                invCountX = 0;
+                invCountX++;
+                invCountY++;
+            }
         }
 
         healthLabel.setText("" + map.getPlayer().getHealth());

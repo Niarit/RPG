@@ -12,7 +12,8 @@ public enum CellType {
     ZALGOTRAX("zalgotrax"),
     RUINED_WALL_PIECE("ruined_wall_piece"),
     WINE("wine"),
-    FALSE_WALL("false_wall");
+    FALSE_WALL("false_wall"),
+    OPENED_DOOR("opened_door");
 
     private final String tileName;
 

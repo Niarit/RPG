@@ -7,16 +7,14 @@ import com.codecool.quest.logic.actors.Player;
 
 
 public abstract class Item implements Drawable {
-    private Cell cell;
+    public Cell cell;
 
 
     public Item(Cell cell) {
         this.cell = cell;
         this.cell.setItem(this);
     }
-    public void pickUp (Player player){
+    public void pickUp (Player player) {
         cell.setItem(null);
     }
-
-
 }
