@@ -61,7 +61,7 @@ public class Main extends Application {
         ui.add(new Label("Number of armors: "),0,4);
         ui.add(armorLabel,1,4);
 
-        mapLoader.loadMap("/map.txt", "/home/nia/codecool/OOP/2ndTW/RPG/src/main/resources/Hootsforce.mp3");
+        mapLoader.loadMap("/map.txt", System.getProperty("user.dir") + "/src/main/resources/Hootsforce.mp3");
 
         canvas = new Canvas(
                 map.getWidth() * Tiles.TILE_WIDTH,
@@ -167,7 +167,7 @@ public class Main extends Application {
 
     private void MeetYourDoom() {
         mapLoader.getMediaPlayer().stop();
-        String path = "/home/nia/codecool/OOP/2ndTW/RPG/src/main/resources/Universe On Fire.mp3";
+        String path = System.getProperty("user.dir") + "/src/main/resources/Universe On Fire.mp3";
         Media media = new Media(new File(path).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
@@ -191,7 +191,7 @@ public class Main extends Application {
     private void gameOver() {
         mapLoader.getMediaPlayer().stop();
         BackgroundFill myBG = new BackgroundFill(Color.BLACK, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
-        String path = "/home/nia/codecool/OOP/2ndTW/RPG/src/main/resources/Magic Dragon.mp3";
+        String path = System.getProperty("user.dir") + "/src/main/resources/Magic Dragon.mp3";
         Media media = new Media(new File(path).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);

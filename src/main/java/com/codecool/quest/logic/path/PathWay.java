@@ -13,7 +13,7 @@ public class PathWay extends BasicPath {
 
     @Override
     public void goTrough() {
-        mapLoader.loadMap("/newMap.txt", "/home/nia/codecool/OOP/2ndTW/RPG/src/main/resources/Magic Dragon.mp3");
+        mapLoader.loadMap("/newMap.txt", System.getProperty("user.dir") + "/src/main/resources/Magic Dragon.mp3");
         mapLoader.refreshStage();
     }
 
