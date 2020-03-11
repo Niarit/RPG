@@ -34,8 +34,10 @@ public class Main extends Application {
     Canvas canvasMain;
     public static ArrayList<String> items = new ArrayList<>();
     Canvas canvasInv;
+    Canvas canvasDialoge;
     GraphicsContext contextMain;
     GraphicsContext contextInv;
+    GraphicsContext contextDialoge;
     Label healthLabel = new Label();
     Label damageLabel = new Label();
     Label weaponLabel = new Label();
@@ -61,21 +63,27 @@ public class Main extends Application {
 
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
+        Label healthText = new Label("Health: ");
+        healthText.setTextFill(Color.WHITE);
+        Label damageText = new Label("Damage: ");
+        damageText.setTextFill(Color.WHITE);
+        damageText.setFont(Font.font("Manaspace", 20));
+        healthText.setFont(Font.font("Manaspace", 20));
 
-        ui.add(new Label("Health: "), 0, 0);
+        ui.add(healthText, 0, 0);
         ui.add(healthLabel, 1, 0);
-        ui.add(new Label("Damage:"), 0, 1);
+        ui.add(damageText, 0, 1);
         ui.add(damageLabel, 1, 1);
-        ui.add(new Label(""),0,2);
-        ui.add(emptyLabel,1,2);
-        ui.add(new Label("Number of weapons: "),0,3);
-        ui.add(weaponLabel,1,3);
-        ui.add(new Label("Number of armors: "),0,4);
-        ui.add(armorLabel,1,4);
+
         canvasInv = new Canvas(
                 200,
                 500);
         contextInv = canvasInv.getGraphicsContext2D();
+
+        canvasDialoge = new Canvas(
+                50,
+                100);
+        contextDialoge = canvasDialoge.getGraphicsContext2D();
 
         mapLoader.loadMap("/map.txt", System.getProperty("user.dir") + "/src/main/resources/Hootsforce.mp3");
 
@@ -89,6 +97,13 @@ public class Main extends Application {
         VBox vbox = new VBox(ui,canvasInv);
         borderPane.setCenter(canvasMain);
         borderPane.setRight(vbox);
+
+
+        HBox dialoge = new HBox(canvasDialoge);
+        borderPane.setCenter(canvasMain);
+        borderPane.setBottom(dialoge);
+        BackgroundFill myBG = new BackgroundFill(Color.BLACK, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
+        borderPane.setBackground(new Background(myBG));
 
         Scene scene = new Scene(borderPane);
         primaryStage.setScene(scene);
@@ -172,12 +187,12 @@ public class Main extends Application {
             }
         }
 
+        healthLabel.setTextFill(Color.WHITE);
+        damageLabel.setTextFill(Color.WHITE);
+        damageLabel.setFont(Font.font("Manaspace", 20));
+        healthLabel.setFont(Font.font("Manaspace", 20));
         healthLabel.setText("" + map.getPlayer().getHealth());
         damageLabel.setText("" + map.getPlayer().getDamage());
-        weaponLabel.setText(""+ (map.getPlayer().getDamage()/5 -1));
-        if (map.getPlayer().getHealth()/5-1>=0) {
-            armorLabel.setText("" + (map.getPlayer().getHealth() / 5 - 1));
-        }
         if (map.getPlayer().getHealth() <= 0) {
             gameOver();
         } else if (map.getPlayer().getX() == 17 && map.getPlayer().getY() == 16){
