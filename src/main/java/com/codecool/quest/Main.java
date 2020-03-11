@@ -21,6 +21,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
+import java.util.Random;
 
 import java.util.ArrayList;
 
@@ -39,9 +40,17 @@ public class Main extends Application {
     Label weaponLabel = new Label();
     Label armorLabel = new Label();
     Label emptyLabel = new Label();
+    int[][] possibleMovements = {{0,-1},{0,1},{-1,0},{1,0}};
+    Random randomChance = new Random();
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+
+    public static int[] getRandomDirection(int[][] list){
+        Random random = new Random();
+        return list[random.nextInt(4)];
     }
 
 
@@ -67,8 +76,7 @@ public class Main extends Application {
                 500);
         contextInv = canvasInv.getGraphicsContext2D();
 
-
-        mapLoader.loadMap("/map.txt", "/home/kalnaipeter/IdeaProjects/RPG/src/main/resources/Hootsforce.mp3");
+        mapLoader.loadMap("/map.txt", System.getProperty("user.dir") + "/src/main/resources/Hootsforce.mp3");
 
         canvasMain = new Canvas(
                 map.getWidth() * Tiles.TILE_WIDTH,
@@ -94,20 +102,38 @@ public class Main extends Application {
         switch (keyEvent.getCode()) {
             case UP:
                 map.getPlayer().move(0, -1);
+                monsterMove();
                 refresh();
                 break;
             case DOWN:
                 map.getPlayer().move(0, 1);
+                monsterMove();
                 refresh();
                 break;
             case LEFT:
                 map.getPlayer().move(-1, 0);
+                monsterMove();
                 refresh();
                 break;
             case RIGHT:
                 map.getPlayer().move(1, 0);
+                monsterMove();
                 refresh();
                 break;
+        }
+    }
+    public void monsterMove() {
+        if(randomChance.nextInt(100) <= 20) {
+            for (int i = 0; i < map.getAllSkeletons().size(); i++) {
+                if(map.getAllSkeletons().get(i).getHealth() <= 0){
+                    System.out.println("DEAD");
+                    map.getAllSkeletons().get(i).setHealth(0);
+                    map.getAllSkeletons().remove(i);
+                    System.out.println("REMOVED");
+                }else{
+                    map.getAllSkeletons().get(i).move(getRandomDirection(possibleMovements)[0],getRandomDirection(possibleMovements)[1]);
+                }
+            }
         }
     }
 
@@ -177,7 +203,7 @@ public class Main extends Application {
 
     private void MeetYourDoom() {
         mapLoader.getMediaPlayer().stop();
-        String path = "/home/kalnaipeter/IdeaProjects/RPG/src/main/resources/Universe On Fire.mp3";
+        String path = System.getProperty("user.dir") + "/src/main/resources/Universe On Fire.mp3";
         Media media = new Media(new File(path).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
@@ -201,7 +227,7 @@ public class Main extends Application {
     private void gameOver() {
         mapLoader.getMediaPlayer().stop();
         BackgroundFill myBG = new BackgroundFill(Color.BLACK, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
-        String path = "/home/kalnaipeter/IdeaProjects/RPG/src/main/resources/Magic Dragon.mp3";
+        String path = System.getProperty("user.dir") + "/src/main/resources/Magic Dragon.mp3";
         Media media = new Media(new File(path).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);

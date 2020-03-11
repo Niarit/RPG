@@ -1,6 +1,11 @@
 package com.codecool.quest.logic;
 
+import com.codecool.quest.logic.actors.Actor;
 import com.codecool.quest.logic.actors.Player;
+
+import java.util.List;
+
+import static com.codecool.quest.logic.actors.Skeleton.allSkeletons;
 
 public class GameMap {
     private int width;
@@ -30,6 +35,10 @@ public class GameMap {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public List<Actor> getAllSkeletons() {
+        return allSkeletons;
     }
 
     public int getWidth() {

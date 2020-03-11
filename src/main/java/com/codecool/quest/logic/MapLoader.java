@@ -5,6 +5,10 @@ import com.codecool.quest.logic.actors.Player;
 import com.codecool.quest.logic.actors.Skeleton;
 import com.codecool.quest.logic.actors.Zalgotrax;
 import com.codecool.quest.logic.items.*;
+import com.codecool.quest.logic.items.Armor;
+import com.codecool.quest.logic.items.Gloryhammer;
+import com.codecool.quest.logic.items.Weapon;
+import com.codecool.quest.logic.path.BackTrack;
 import com.codecool.quest.logic.path.PathWay;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -85,6 +89,10 @@ public class MapLoader {
                         case 'p':
                             cell.setType(CellType.PATH);
                             cell.setBasicPath(new PathWay(cell,this));
+                            break;
+                        case 'ű':
+                            cell.setType(CellType.PATH);
+                            cell.setBasicPath(new BackTrack(cell, this));
                             break;
                         case 'l':
                             cell.setType(CellType.WATER);
