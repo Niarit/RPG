@@ -86,7 +86,7 @@ public class Main extends Application {
 
 
 
-        
+
         Label inventoryLabel = new Label("      Inventory: ");
         inventoryLabel.setStyle("-fx-font-weight: bold");
         ui.add(inventoryLabel,0,3);
@@ -109,6 +109,9 @@ public class Main extends Application {
         borderPane.setCenter(canvasMain);
         borderPane.setRight(vbox);
 
+//        Scene sceneasd = new Scene(grid);
+//        primaryStage.setScene(sceneasd);
+//        refresh();
         Scene scene = new Scene(borderPane);
         primaryStage.setScene(scene);
         refresh();
