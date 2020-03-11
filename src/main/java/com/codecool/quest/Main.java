@@ -126,10 +126,8 @@ public class Main extends Application {
         if(randomChance.nextInt(100) <= 20) {
             for (int i = 0; i < map.getAllSkeletons().size(); i++) {
                 if(map.getAllSkeletons().get(i).getHealth() <= 0){
-                    System.out.println("DEAD");
                     map.getAllSkeletons().get(i).setHealth(0);
                     map.getAllSkeletons().remove(i);
-                    System.out.println("REMOVED");
                 }else{
                     map.getAllSkeletons().get(i).move(getRandomDirection(possibleMovements)[0],getRandomDirection(possibleMovements)[1]);
                 }
