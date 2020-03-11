@@ -5,7 +5,7 @@ import com.codecool.quest.logic.Cell;
 public class Zalgotrax extends Actor {
 
     public Zalgotrax(Cell cell) {
-        super(cell, 100, 100);
+        super(cell, 0, 100);
     }
 
     @Override

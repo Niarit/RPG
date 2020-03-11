@@ -1,6 +1,7 @@
 package com.codecool.quest;
 
 import com.codecool.quest.logic.Cell;
+import com.codecool.quest.logic.CellType;
 import com.codecool.quest.logic.GameMap;
 import com.codecool.quest.logic.MapLoader;
 import javafx.application.Application;
@@ -120,16 +121,16 @@ public class Main extends Application {
                 monsterMove();
                 refresh();
                 break;
+            case SPACE:
+                mapLoader.loadMap("/placeholder.txt", System.getProperty("user.dir") + "/src/main/resources/Hootsforce.mp3");
         }
     }
     public void monsterMove() {
         if(randomChance.nextInt(100) <= 20) {
             for (int i = 0; i < map.getAllSkeletons().size(); i++) {
                 if(map.getAllSkeletons().get(i).getHealth() <= 0){
-                    System.out.println("DEAD");
                     map.getAllSkeletons().get(i).setHealth(0);
                     map.getAllSkeletons().remove(i);
-                    System.out.println("REMOVED");
                 }else{
                     map.getAllSkeletons().get(i).move(getRandomDirection(possibleMovements)[0],getRandomDirection(possibleMovements)[1]);
                 }
@@ -179,10 +180,11 @@ public class Main extends Application {
         }
         if (map.getPlayer().getHealth() <= 0) {
             gameOver();
-        } else if (map.getPlayer().getX() == 17 && map.getPlayer().getY() == 17){
-            MeetYourDoom();
+        } else if (map.getPlayer().getX() == 17 && map.getPlayer().getY() == 16){
+            mapLoader.loadMap("/placeholder.txt", System.getProperty("user.dir") + "/src/main/resources/Hootsforce.mp3");
         } else if(map.getPlayer().getX() == 17 && map.getPlayer().getY() == 18){
             LegendaryBattle();
+
         }
     }
 
@@ -199,6 +201,7 @@ public class Main extends Application {
         borderPane.setBackground(new Background(myBG));
         LegendaryBattle.setFont(Font.font("Manaspace", 30));
         LegendaryBattle.setTextFill(Color.WHITE);
+
     }
 
     private void MeetYourDoom() {
