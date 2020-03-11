@@ -13,7 +13,7 @@ public class BackTrack extends BasicPath {
 
     @Override
     public void goTrough() {
-        mapLoader.loadMap("/map.txt", "/home/nia/codecool/OOP/2ndTW/RPG/src/main/resources/Hootsforce.mp3");
+        mapLoader.loadMap("/map.txt", System.getProperty("user.dir") + "/src/main/resources/Hootsforce.mp3");
         mapLoader.refreshStage();
 
     }
