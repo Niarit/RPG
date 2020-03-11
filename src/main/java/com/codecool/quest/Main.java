@@ -1,7 +1,6 @@
 package com.codecool.quest;
 
 import com.codecool.quest.logic.Cell;
-import com.codecool.quest.logic.CellType;
 import com.codecool.quest.logic.GameMap;
 import com.codecool.quest.logic.MapLoader;
 import javafx.application.Application;
@@ -22,29 +21,29 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
+import java.util.List;
 import java.util.Random;
 
 import java.util.ArrayList;
 
 public class Main extends Application {
-    MapLoader mapLoader = new MapLoader(this);
-    BorderPane borderPane = new BorderPane();
+    public MapLoader mapLoader = new MapLoader(this);
+    public BorderPane borderPane = new BorderPane();
     public GameMap map;
-    MediaPlayer mediaPlayer;
-    Canvas canvasMain;
+    public MediaPlayer mediaPlayer;
+    public Canvas canvasMain;
     public static ArrayList<String> items = new ArrayList<>();
-    Canvas canvasInv;
-    Canvas canvasDialoge;
-    GraphicsContext contextMain;
-    GraphicsContext contextInv;
-    GraphicsContext contextDialoge;
-    Label healthLabel = new Label();
-    Label damageLabel = new Label();
-    Label weaponLabel = new Label();
-    Label armorLabel = new Label();
-    Label emptyLabel = new Label();
-    int[][] possibleMovements = {{0,-1},{0,1},{-1,0},{1,0}};
-    Random randomChance = new Random();
+    public Canvas canvasInv;
+    public Canvas canvasDialogue;
+    public GraphicsContext contextMain;
+    public GraphicsContext contextInv;
+    public GraphicsContext contextDialogue;
+    public Label healthLabel = new Label();
+    public Label damageLabel = new Label();
+    public Label DialogueLabel = new Label();
+    public int[][] possibleMovements = {{0,-1},{0,1},{-1,0},{1,0}};
+    public Random randomChance = new Random();
+
 
     public static void main(String[] args) {
         launch(args);
@@ -59,6 +58,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         GridPane ui = new GridPane();
 
         ui.setPrefWidth(200);
@@ -80,10 +80,10 @@ public class Main extends Application {
                 500);
         contextInv = canvasInv.getGraphicsContext2D();
 
-        canvasDialoge = new Canvas(
+        canvasDialogue = new Canvas(
                 50,
                 100);
-        contextDialoge = canvasDialoge.getGraphicsContext2D();
+        contextDialogue = canvasDialogue.getGraphicsContext2D();
 
         mapLoader.loadMap("/map.txt", System.getProperty("user.dir") + "/src/main/resources/Hootsforce.mp3");
 
@@ -99,9 +99,9 @@ public class Main extends Application {
         borderPane.setRight(vbox);
 
 
-        HBox dialoge = new HBox(canvasDialoge);
+        HBox Dialogue = new HBox(canvasDialogue);
         borderPane.setCenter(canvasMain);
-        borderPane.setBottom(dialoge);
+        borderPane.setBottom(Dialogue);
         BackgroundFill myBG = new BackgroundFill(Color.BLACK, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
         borderPane.setBackground(new Background(myBG));
 
@@ -152,6 +152,13 @@ public class Main extends Application {
             }
         }
     }
+    public int getXOffset(){
+        return Math.max(map.getPlayer().getX() - (map.getWidth() / 2), 0);
+
+    }
+    public int getYOffset(){
+        return Math.max(map.getPlayer().getY() - (map.getHeight() / 2), 0);
+    }
 
     public void refresh() {
         int invCountX = 1;
@@ -159,15 +166,15 @@ public class Main extends Application {
         int itemCounter = 0;
         contextMain.setFill(Color.BLACK);
         contextMain.fillRect(0, 0, canvasMain.getWidth(), canvasMain.getHeight());
-        for (int x = 0; x < map.getWidth(); x++) {
-            for (int y = 0; y < map.getHeight(); y++) {
+        for (int x = getXOffset(); x < map.getWidth(); x++) {
+            for (int y = getYOffset(); y < map.getHeight(); y++) {
                 Cell cell = map.getCell(x, y);
                 if (cell.getActor() != null) {
-                    Tiles.drawTile(contextMain, cell.getActor(), x, y);
+                    Tiles.drawTile(contextMain, cell.getActor(), x-getXOffset(), y-getYOffset());
                 } else if (cell.getItem() != null) {
-                    Tiles.drawTile(contextMain, cell.getItem(), x, y);
+                    Tiles.drawTile(contextMain, cell.getItem(), x-getXOffset(), y-getYOffset());
                 } else {
-                    Tiles.drawTile(contextMain, cell, x, y);
+                    Tiles.drawTile(contextMain, cell, x-getXOffset(), y-getYOffset());
                 }
             }
         }
@@ -219,28 +226,28 @@ public class Main extends Application {
 
     }
 
-    private void MeetYourDoom() {
-        mapLoader.getMediaPlayer().stop();
-        String path = System.getProperty("user.dir") + "/src/main/resources/Universe On Fire.mp3";
-        Media media = new Media(new File(path).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
-
-        BackgroundFill myBG = new BackgroundFill(Color.BLACK, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
-
-        Label MeetYourDoom = new Label("As you aproach the figure in front of you, the sudden realization"+ "\n" +
-                                            "makes you dizzy. His eyes are burning with the flames of hatred as he looks at you"+ "\n" +
-                                            "He was no other then the Warlock Zargotrax himself!" + "\n" +
-                                            "You stand rooted in front of him for seconds, but when you made your first move" + "\n" +
-                                            "the warlock disappears in thin air." + "\n" + "\n" +
-                                            "'Foolish mortal! You can't get me this easily!'" + "\n" + "\n" +
-                                            "It seems your journey is not over yet!");
-        MeetYourDoom.setFont(Font.font("Manaspace", 30));
-        borderPane.setCenter(MeetYourDoom);
-        borderPane.setRight(null);
-        borderPane.setBackground(new Background(myBG));
-        MeetYourDoom.setTextFill(Color.WHITE);
-    }
+//    private void MeetYourDoom() {
+//        mapLoader.getMediaPlayer().stop();
+//        String path = System.getProperty("user.dir") + "/src/main/resources/Universe On Fire.mp3";
+//        Media media = new Media(new File(path).toURI().toString());
+//        mediaPlayer = new MediaPlayer(media);
+//        mediaPlayer.setAutoPlay(true);
+//
+//        BackgroundFill myBG = new BackgroundFill(Color.BLACK, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
+//
+//        Label MeetYourDoom = new Label("As you aproach the figure in front of you, the sudden realization"+ "\n" +
+//                                            "makes you dizzy. His eyes are burning with the flames of hatred as he looks at you"+ "\n" +
+//                                            "He was no other then the Warlock Zargotrax himself!" + "\n" +
+//                                            "You stand rooted in front of him for seconds, but when you made your first move" + "\n" +
+//                                            "the warlock disappears in thin air." + "\n" + "\n" +
+//                                            "'Foolish mortal! You can't get me this easily!'" + "\n" + "\n" +
+//                                            "It seems your journey is not over yet!");
+//        MeetYourDoom.setFont(Font.font("Manaspace", 30));
+//        borderPane.setCenter(MeetYourDoom);
+//        borderPane.setRight(null);
+//        borderPane.setBackground(new Background(myBG));
+//        MeetYourDoom.setTextFill(Color.WHITE);
+//    }
 
     private void gameOver() {
         mapLoader.getMediaPlayer().stop();
