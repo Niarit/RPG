@@ -2,11 +2,9 @@ package com.codecool.quest.logic;
 
 import com.codecool.quest.Main;
 import com.codecool.quest.logic.actors.Actor;
-import com.codecool.quest.logic.actors.Player;
 import com.codecool.quest.logic.items.Item;
 import com.codecool.quest.logic.path.BasicPath;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Cell implements Drawable {
@@ -65,13 +63,16 @@ public class Cell implements Drawable {
             } else if (cellToMove.getTileName().equals("water")) {
                 gameMap.getCell(x, y).getActor().setHealth(gameMap.getCell(x, y).getActor().getHealth() - 5);
                 return cellToMove;
-            } else if (cellToMove.getTileName().equals("opened_door") && cellToMove.getItem() != null) {
-                if (!Main.items.contains("key")) {
+            } else if (cellToMove.getTileName().equals("blue_opened_door") && cellToMove.getItem() != null) {
+                if (!Main.items.contains("blueKey")) {
                     return gameMap.getCell(x, y);
                 }
-                removeItem("key");
-            } else if (cellToMove.getItem() != null) {
-                return cellToMove;
+                removeItem("blueKey");
+            } else if (cellToMove.getTileName().equals("red_opened_door") && cellToMove.getItem() != null){
+                if (!Main.items.contains("redKey")){
+                    return gameMap.getCell(x,y);
+                }
+                removeItem("redKey");
             }
             return cellToMove;
 
