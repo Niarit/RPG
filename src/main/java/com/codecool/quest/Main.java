@@ -8,7 +8,9 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.layout.BorderPane;
@@ -37,9 +39,6 @@ public class Main extends Application {
     GraphicsContext contextInv;
     Label healthLabel = new Label();
     Label damageLabel = new Label();
-    Label weaponLabel = new Label();
-    Label armorLabel = new Label();
-    Label emptyLabel = new Label();
     int[][] possibleMovements = {{0,-1},{0,1},{-1,0},{1,0}};
     Random randomChance = new Random();
 
@@ -65,12 +64,33 @@ public class Main extends Application {
         ui.add(healthLabel, 1, 0);
         ui.add(new Label("Damage:"), 0, 1);
         ui.add(damageLabel, 1, 1);
-        ui.add(new Label(""),0,2);
-        ui.add(emptyLabel,1,2);
-        ui.add(new Label("Number of weapons: "),0,3);
-        ui.add(weaponLabel,1,3);
-        ui.add(new Label("Number of armors: "),0,4);
-        ui.add(armorLabel,1,4);
+
+
+
+
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(10, 10, 10, 10));
+        grid.setVgap(5);
+        grid.setHgap(5);
+//Defining the Name text field
+        final TextField name = new TextField();
+        name.setPromptText("Enter your first name.");
+        name.setPrefColumnCount(10);
+        name.getText();
+        GridPane.setConstraints(name, 0, 0);
+        grid.getChildren().add(name);
+//Defining the Submit button
+        Button submit = new Button("Submit");
+        GridPane.setConstraints(submit, 1, 0);
+        grid.getChildren().add(submit);
+
+
+
+        
+        Label inventoryLabel = new Label("      Inventory: ");
+        inventoryLabel.setStyle("-fx-font-weight: bold");
+        ui.add(inventoryLabel,0,3);
+
         canvasInv = new Canvas(
                 200,
                 500);
@@ -158,7 +178,7 @@ public class Main extends Application {
                 Tiles.getTileForItem(contextInv, items.get(itemCounter), invCountX, invCountY);
                 itemCounter++;
             } else {
-                Tiles.getTileForItem(contextInv, "empty", invCountX, invCountY);
+                Tiles.getTileForItem(contextInv, "inventory", invCountX, invCountY);
             }
             if (invCountX < 3) {
                 invCountX++;
@@ -171,10 +191,7 @@ public class Main extends Application {
 
         healthLabel.setText("" + map.getPlayer().getHealth());
         damageLabel.setText("" + map.getPlayer().getDamage());
-        weaponLabel.setText(""+ (map.getPlayer().getDamage()/5 -1));
-        if (map.getPlayer().getHealth()/5-1>=0) {
-            armorLabel.setText("" + (map.getPlayer().getHealth() / 5 - 1));
-        }
+
         if (map.getPlayer().getHealth() <= 0) {
             gameOver();
         } else if (map.getPlayer().getX() == 17 && map.getPlayer().getY() == 17){
