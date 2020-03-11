@@ -4,23 +4,23 @@ import com.codecool.quest.Main;
 import com.codecool.quest.logic.Cell;
 import com.codecool.quest.logic.actors.Player;
 
-public class Armor extends Item {
-    int health = 5;
-    public Armor(Cell cell) {
+public class Key extends Item{
+
+
+    public Key(Cell cell) {
         super(cell);
     }
 
     @Override
     public void pickUp(Player player) {
         if (Main.items.size() < 9) {
-            player.setHealth(player.getHealth() + health);
-            Main.items.add("armor");
+            Main.items.add("key");
             super.pickUp(player);
         }
     }
 
     @Override
     public String getTileName() {
-        return "armor";
+        return "key";
     }
 }

@@ -45,10 +45,19 @@ public class Tiles {
         tileMap.put("false_wall", new Tile(1,2));
         tileMap.put("wine", new Tile(1,2));
         tileMap.put("Gloryhammer", new Tile(5,29));
+        tileMap.put("key", new Tile(17,23));
+        tileMap.put("opened_door",new Tile(6,9));
+        tileMap.put("closed_door",new Tile(3,9));
     }
 
     public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {
         Tile tile = tileMap.get(d.getTileName());
+        context.drawImage(tileset, tile.x, tile.y, tile.w, tile.h,
+                x * TILE_WIDTH, y * TILE_WIDTH, TILE_WIDTH, TILE_WIDTH);
+    }
+
+    public static void getTileForItem(GraphicsContext context, String t, int x, int y) {
+        Tile tile = tileMap.get(t);
         context.drawImage(tileset, tile.x, tile.y, tile.w, tile.h,
                 x * TILE_WIDTH, y * TILE_WIDTH, TILE_WIDTH, TILE_WIDTH);
     }

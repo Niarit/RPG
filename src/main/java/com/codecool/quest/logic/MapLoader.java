@@ -4,6 +4,7 @@ import com.codecool.quest.Main;
 import com.codecool.quest.logic.actors.Player;
 import com.codecool.quest.logic.actors.Skeleton;
 import com.codecool.quest.logic.actors.Zalgotrax;
+import com.codecool.quest.logic.items.*;
 import com.codecool.quest.logic.items.Armor;
 import com.codecool.quest.logic.items.Gloryhammer;
 import com.codecool.quest.logic.items.Weapon;
@@ -121,6 +122,14 @@ public class MapLoader {
                         case 'G':
                             cell.setType(CellType.FLOOR);
                             new Gloryhammer(cell);
+                            break;
+                        case 'k':
+                            cell.setType(CellType.FLOOR);
+                            new Key(cell);
+                            break;
+                        case 'd':
+                            cell.setType(CellType.OPENED_DOOR);
+                            new Door(cell);
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
