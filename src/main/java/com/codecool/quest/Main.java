@@ -24,26 +24,34 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
+import java.util.List;
 import java.util.Random;
 
 import java.util.ArrayList;
 
 public class Main extends Application {
-    MapLoader mapLoader = new MapLoader(this);
-    BorderPane borderPane = new BorderPane();
+
+    public MapLoader mapLoader = new MapLoader(this);
+    public BorderPane borderPane = new BorderPane();
     String playerName;
+
     public GameMap map;
-    MediaPlayer mediaPlayer;
-    Canvas canvasMain;
+    public MediaPlayer mediaPlayer;
+    public Canvas canvasMain;
     public static ArrayList<String> items = new ArrayList<>();
-    Canvas canvasInv;
-    GraphicsContext contextMain;
-    GraphicsContext contextInv;
-    Label healthLabel = new Label();
-    Label damageLabel = new Label();
-    Label playerNameLabel = new Label();
-    int[][] possibleMovements = {{0,-1},{0,1},{-1,0},{1,0}};
-    Random randomChance = new Random();
+    public Canvas canvasInv;
+    public Canvas canvasDialogue;
+    public GraphicsContext contextMain;
+    public GraphicsContext contextInv;
+    public GraphicsContext contextDialogue;
+    public Label healthLabel = new Label();
+    public Label damageLabel = new Label();
+    public Label DialogueLabel = new Label();
+    public Label playerNameLabel = new Label();
+    public int[][] possibleMovements = {{0,-1},{0,1},{-1,0},{1,0}};
+    public Random randomChance = new Random();
+
+
 
     public static void main(String[] args) {
         launch(args);
@@ -58,17 +66,30 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         GridPane ui = new GridPane();
 
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
+        Label healthText = new Label("Health: ");
+        healthText.setTextFill(Color.WHITE);
+        Label damageText = new Label("Damage: ");
+        damageText.setTextFill(Color.WHITE);
+        damageText.setFont(Font.font("Manaspace", 20));
+        healthText.setFont(Font.font("Manaspace", 20));
+
+
+        ui.add(healthText, 0, 2);
+        ui.add(healthLabel, 1, 2);
+        ui.add(damageText, 0, 3);
+        ui.add(damageLabel, 1, 3);
 
         playerNameLabel.setStyle("-fx-font-weight: bold");
         ui.add(playerNameLabel,0,0);
-        ui.add(new Label("Health: "), 0, 2);
-        ui.add(healthLabel, 1, 2);
-        ui.add(new Label("Damage:"), 0, 3);
-        ui.add(damageLabel, 1, 3);
+//         ui.add(new Label("Health: "), 0, 2);
+//         ui.add(healthLabel, 1, 2);
+//         ui.add(new Label("Damage:"), 0, 3);
+//         ui.add(damageLabel, 1, 3);
 
         Label inventoryLabel = new Label("      Inventory: ");
         inventoryLabel.setStyle("-fx-font-weight: bold");
@@ -78,6 +99,11 @@ public class Main extends Application {
                 200,
                 500);
         contextInv = canvasInv.getGraphicsContext2D();
+
+        canvasDialogue = new Canvas(
+                50,
+                100);
+        contextDialogue = canvasDialogue.getGraphicsContext2D();
 
         mapLoader.loadMap("/map.txt", System.getProperty("user.dir") + "/src/main/resources/Hootsforce.mp3");
 
@@ -91,11 +117,25 @@ public class Main extends Application {
         borderPane.setCenter(canvasMain);
         borderPane.setRight(vbox);
 
+
+
+        HBox Dialogue = new HBox(canvasDialogue);
+        borderPane.setCenter(canvasMain);
+        borderPane.setBottom(Dialogue);
+        BackgroundFill myBG = new BackgroundFill(Color.BLACK, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
+        borderPane.setBackground(new Background(myBG));
+
+        Scene scene = new Scene(borderPane);
+        primaryStage.setScene(scene);
+        refresh();
+        scene.setOnKeyPressed(this::onKeyPressed);
+
         //name inputwindow
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10, 10, 10, 10));
         grid.setVgap(5);
         grid.setHgap(5);
+
 
         @FXML
         final TextField name = new TextField();
@@ -140,6 +180,8 @@ public class Main extends Application {
                 monsterMove();
                 refresh();
                 break;
+            case SPACE:
+                mapLoader.loadMap("/placeholder.txt", System.getProperty("user.dir") + "/src/main/resources/Hootsforce.mp3");
         }
     }
     public void monsterMove() {
@@ -154,6 +196,13 @@ public class Main extends Application {
             }
         }
     }
+    public int getXOffset(){
+        return Math.max(map.getPlayer().getX() - (map.getWidth() / 2), 0);
+
+    }
+    public int getYOffset(){
+        return Math.max(map.getPlayer().getY() - (map.getHeight() / 2), 0);
+    }
 
     public void refresh() {
         int invCountX = 1;
@@ -161,15 +210,15 @@ public class Main extends Application {
         int itemCounter = 0;
         contextMain.setFill(Color.BLACK);
         contextMain.fillRect(0, 0, canvasMain.getWidth(), canvasMain.getHeight());
-        for (int x = 0; x < map.getWidth(); x++) {
-            for (int y = 0; y < map.getHeight(); y++) {
+        for (int x = getXOffset(); x < map.getWidth(); x++) {
+            for (int y = getYOffset(); y < map.getHeight(); y++) {
                 Cell cell = map.getCell(x, y);
                 if (cell.getActor() != null) {
-                    Tiles.drawTile(contextMain, cell.getActor(), x, y);
+                    Tiles.drawTile(contextMain, cell.getActor(), x-getXOffset(), y-getYOffset());
                 } else if (cell.getItem() != null) {
-                    Tiles.drawTile(contextMain, cell.getItem(), x, y);
+                    Tiles.drawTile(contextMain, cell.getItem(), x-getXOffset(), y-getYOffset());
                 } else {
-                    Tiles.drawTile(contextMain, cell, x, y);
+                    Tiles.drawTile(contextMain, cell, x-getXOffset(), y-getYOffset());
                 }
             }
         }
@@ -189,16 +238,23 @@ public class Main extends Application {
             }
         }
 
-        playerNameLabel.setText("           " + playerName);
+
+        healthLabel.setTextFill(Color.WHITE);
+        damageLabel.setTextFill(Color.WHITE);
+        damageLabel.setFont(Font.font("Manaspace", 20));
+        healthLabel.setFont(Font.font("Manaspace", 20));
         healthLabel.setText("" + map.getPlayer().getHealth());
         damageLabel.setText("" + map.getPlayer().getDamage());
 
+        playerNameLabel.setText("           " + playerName);
+      
         if (map.getPlayer().getHealth() <= 0) {
             gameOver();
-        } else if (map.getPlayer().getX() == 17 && map.getPlayer().getY() == 17){
-            MeetYourDoom();
+        } else if (map.getPlayer().getX() == 17 && map.getPlayer().getY() == 16){
+            mapLoader.loadMap("/placeholder.txt", System.getProperty("user.dir") + "/src/main/resources/Hootsforce.mp3");
         } else if(map.getPlayer().getX() == 17 && map.getPlayer().getY() == 18){
             LegendaryBattle();
+
         }
     }
 
@@ -215,30 +271,31 @@ public class Main extends Application {
         borderPane.setBackground(new Background(myBG));
         LegendaryBattle.setFont(Font.font("Manaspace", 30));
         LegendaryBattle.setTextFill(Color.WHITE);
+
     }
 
-    private void MeetYourDoom() {
-        mapLoader.getMediaPlayer().stop();
-        String path = System.getProperty("user.dir") + "/src/main/resources/Universe On Fire.mp3";
-        Media media = new Media(new File(path).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
-
-        BackgroundFill myBG = new BackgroundFill(Color.BLACK, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
-
-        Label MeetYourDoom = new Label("As you aproach the figure in front of you, the sudden realization"+ "\n" +
-                                            "makes you dizzy. His eyes are burning with the flames of hatred as he looks at you"+ "\n" +
-                                            "He was no other then the Warlock Zargotrax himself!" + "\n" +
-                                            "You stand rooted in front of him for seconds, but when you made your first move" + "\n" +
-                                            "the warlock disappears in thin air." + "\n" + "\n" +
-                                            "'Foolish mortal! You can't get me this easily!'" + "\n" + "\n" +
-                                            "It seems your journey is not over yet!");
-        MeetYourDoom.setFont(Font.font("Manaspace", 30));
-        borderPane.setCenter(MeetYourDoom);
-        borderPane.setRight(null);
-        borderPane.setBackground(new Background(myBG));
-        MeetYourDoom.setTextFill(Color.WHITE);
-    }
+//    private void MeetYourDoom() {
+//        mapLoader.getMediaPlayer().stop();
+//        String path = System.getProperty("user.dir") + "/src/main/resources/Universe On Fire.mp3";
+//        Media media = new Media(new File(path).toURI().toString());
+//        mediaPlayer = new MediaPlayer(media);
+//        mediaPlayer.setAutoPlay(true);
+//
+//        BackgroundFill myBG = new BackgroundFill(Color.BLACK, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
+//
+//        Label MeetYourDoom = new Label("As you aproach the figure in front of you, the sudden realization"+ "\n" +
+//                                            "makes you dizzy. His eyes are burning with the flames of hatred as he looks at you"+ "\n" +
+//                                            "He was no other then the Warlock Zargotrax himself!" + "\n" +
+//                                            "You stand rooted in front of him for seconds, but when you made your first move" + "\n" +
+//                                            "the warlock disappears in thin air." + "\n" + "\n" +
+//                                            "'Foolish mortal! You can't get me this easily!'" + "\n" + "\n" +
+//                                            "It seems your journey is not over yet!");
+//        MeetYourDoom.setFont(Font.font("Manaspace", 30));
+//        borderPane.setCenter(MeetYourDoom);
+//        borderPane.setRight(null);
+//        borderPane.setBackground(new Background(myBG));
+//        MeetYourDoom.setTextFill(Color.WHITE);
+//    }
 
     private void gameOver() {
         mapLoader.getMediaPlayer().stop();
