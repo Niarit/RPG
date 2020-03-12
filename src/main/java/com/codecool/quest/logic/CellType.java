@@ -14,8 +14,7 @@ public enum CellType {
     WINE("wine"),
     FALSE_WALL("false_wall"),
     LEFT_CORNER("left_corner"),
-    RIGHT_CORNER("right_corner");
-
+    RIGHT_CORNER("right_corner"),
     BLUE_OPENED_DOOR("blue_opened_door"),
     RED_OPENED_DOOR("red_opened_door");
 
