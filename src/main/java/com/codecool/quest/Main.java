@@ -8,8 +8,11 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -27,8 +30,11 @@ import java.util.Random;
 import java.util.ArrayList;
 
 public class Main extends Application {
+
     public MapLoader mapLoader = new MapLoader(this);
     public BorderPane borderPane = new BorderPane();
+    String playerName;
+
     public GameMap map;
     public MediaPlayer mediaPlayer;
     public Canvas canvasMain;
@@ -41,8 +47,10 @@ public class Main extends Application {
     public Label healthLabel = new Label();
     public Label damageLabel = new Label();
     public Label DialogueLabel = new Label();
+    public Label playerNameLabel = new Label();
     public int[][] possibleMovements = {{0,-1},{0,1},{-1,0},{1,0}};
     public Random randomChance = new Random();
+
 
 
     public static void main(String[] args) {
@@ -70,10 +78,22 @@ public class Main extends Application {
         damageText.setFont(Font.font("Manaspace", 20));
         healthText.setFont(Font.font("Manaspace", 20));
 
-        ui.add(healthText, 0, 0);
-        ui.add(healthLabel, 1, 0);
-        ui.add(damageText, 0, 1);
-        ui.add(damageLabel, 1, 1);
+
+        ui.add(healthText, 0, 2);
+        ui.add(healthLabel, 1, 2);
+        ui.add(damageText, 0, 3);
+        ui.add(damageLabel, 1, 3);
+
+        playerNameLabel.setStyle("-fx-font-weight: bold");
+        ui.add(playerNameLabel,0,0);
+//         ui.add(new Label("Health: "), 0, 2);
+//         ui.add(healthLabel, 1, 2);
+//         ui.add(new Label("Damage:"), 0, 3);
+//         ui.add(damageLabel, 1, 3);
+
+        Label inventoryLabel = new Label("      Inventory: ");
+        inventoryLabel.setStyle("-fx-font-weight: bold");
+        ui.add(inventoryLabel,0,5);
 
         canvasInv = new Canvas(
                 200,
@@ -93,10 +113,10 @@ public class Main extends Application {
         contextMain = canvasMain.getGraphicsContext2D();
         refresh();
 
-
         VBox vbox = new VBox(ui,canvasInv);
         borderPane.setCenter(canvasMain);
         borderPane.setRight(vbox);
+
 
 
         HBox Dialogue = new HBox(canvasDialogue);
@@ -110,8 +130,32 @@ public class Main extends Application {
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
 
-        primaryStage.setTitle("Gloryhammer: Rise of the Chaos Wizard");
-        primaryStage.show();
+        //name inputwindow
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(10, 10, 10, 10));
+        grid.setVgap(5);
+        grid.setHgap(5);
+
+
+        @FXML
+        final TextField name = new TextField();
+        Label titleLabel = new Label("Enter a player name");
+        GridPane.setConstraints(titleLabel,0,0);
+        grid.getChildren().add(titleLabel);
+        name.setPromptText("Name... ");
+        name.setPrefColumnCount(10);
+        name.getText();
+        GridPane.setConstraints(name, 0, 1);
+        grid.getChildren().add(name);
+        Button submit = new Button("Submit");
+        GridPane.setConstraints(submit, 1, 1);
+        grid.getChildren().add(submit);
+
+        showWindow(grid,primaryStage);
+        submit.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+            playerName = name.getText();
+            showWindow(borderPane,primaryStage);
+        });
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
@@ -183,7 +227,7 @@ public class Main extends Application {
                 Tiles.getTileForItem(contextInv, items.get(itemCounter), invCountX, invCountY);
                 itemCounter++;
             } else {
-                Tiles.getTileForItem(contextInv, "empty", invCountX, invCountY);
+                Tiles.getTileForItem(contextInv, "inventory", invCountX, invCountY);
             }
             if (invCountX < 3) {
                 invCountX++;
@@ -194,12 +238,16 @@ public class Main extends Application {
             }
         }
 
+
         healthLabel.setTextFill(Color.WHITE);
         damageLabel.setTextFill(Color.WHITE);
         damageLabel.setFont(Font.font("Manaspace", 20));
         healthLabel.setFont(Font.font("Manaspace", 20));
         healthLabel.setText("" + map.getPlayer().getHealth());
         damageLabel.setText("" + map.getPlayer().getDamage());
+
+        playerNameLabel.setText("           " + playerName);
+      
         if (map.getPlayer().getHealth() <= 0) {
             gameOver();
         } else if (map.getPlayer().getX() == 17 && map.getPlayer().getY() == 16){
@@ -263,5 +311,13 @@ public class Main extends Application {
         borderPane.setCenter(GameOver);
         borderPane.setBackground(new Background(myBG));
         GameOver.setTextFill(Color.WHITE);
+    }
+    private void showWindow(Pane pane,Stage primaryStage){
+        Scene scene = new Scene(pane);
+        primaryStage.setScene(scene);
+        refresh();
+        scene.setOnKeyPressed(this::onKeyPressed);
+        primaryStage.setTitle("Gloryhammer: Rise of the Chaos Wizard");
+        primaryStage.show();
     }
 }

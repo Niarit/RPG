@@ -1,26 +1,26 @@
-package com.codecool.quest.logic.items;
+package com.codecool.quest.logic.items.keys;
 
 import com.codecool.quest.Main;
 import com.codecool.quest.logic.Cell;
 import com.codecool.quest.logic.actors.Player;
 
-public class Key extends Item{
+public class RedKey extends Key {
 
 
-    public Key(Cell cell) {
+    public RedKey(Cell cell) {
         super(cell);
     }
 
     @Override
     public void pickUp(Player player) {
         if (Main.items.size() < 9) {
-            Main.items.add("key");
+            Main.items.add("redKey");
             super.pickUp(player);
         }
     }
 
     @Override
     public String getTileName() {
-        return "key";
+        return "redKey";
     }
 }
