@@ -114,7 +114,16 @@ public class MapLoader {
                             cell.setType(CellType.WINE);
                             break;
                         case '/':
-                            cell.setType(CellType.RUINED_WALL_PIECE);
+                            cell.setType(CellType.RUINED_WALL_PIECE_LEFT);
+                            break;
+                        case 'q':
+                            cell.setType(CellType.RUINED_WALL_PIECE_RiGHT);
+                            break;
+                        case '<':
+                            cell.setType(CellType.LEFT_CORNER);
+                            break;
+                        case '>':
+                            cell.setType(CellType.RIGHT_CORNER);
                             break;
                         case 'f':
                             cell.setType(CellType.FALSE_WALL);

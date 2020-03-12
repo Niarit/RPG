@@ -55,7 +55,7 @@ public class Cell implements Drawable {
     public Cell getNeighbor(int dx, int dy) {
         try {
             Cell cellToMove = gameMap.getCell(x + dx, y + dy);
-            if (cellToMove.type == CellType.WALL || cellToMove.type == CellType.EMPTY || cellToMove.type == CellType.WINE || cellToMove.type == CellType.RUINED_WALL_PIECE || cellToMove.type == CellType.ROCK || cellToMove.type == CellType.TREE) {
+            if (cellToMove.type == CellType.WALL || cellToMove.type == CellType.EMPTY || cellToMove.type == CellType.WINE || cellToMove.type == CellType.RUINED_WALL_PIECE_LEFT || cellToMove.type == CellType.RUINED_WALL_PIECE_RiGHT|| cellToMove.type == CellType.ROCK || cellToMove.type == CellType.TREE) {
                 return gameMap.getCell(x, y);
             } else if (cellToMove.type == CellType.FLOOR && cellToMove.getActor() != null) {
                 combat(cellToMove, gameMap.getCell(x, y));

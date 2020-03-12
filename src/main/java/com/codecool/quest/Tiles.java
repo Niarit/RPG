@@ -41,7 +41,10 @@ public class Tiles {
         tileMap.put("tree", new Tile(6,2));
         tileMap.put("rock", new Tile(5,2));
         tileMap.put("zalgotrax", new Tile(31,1));
-        tileMap.put("ruined_wall_piece", new Tile(1,11));
+        tileMap.put("ruined_wall_piece_left", new Tile(1,11));
+        tileMap.put("ruined_wall_piece_right", new Tile(0,11));
+        tileMap.put("right_corner", new Tile(1,12));
+        tileMap.put("left_corner", new Tile(0,12));
         tileMap.put("false_wall", new Tile(1,2));
         tileMap.put("wine", new Tile(1,2));
         tileMap.put("Gloryhammer", new Tile(5,29));
