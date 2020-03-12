@@ -91,6 +91,8 @@ public class Main extends Application {
         borderPane.setCenter(canvasMain);
         borderPane.setRight(vbox);
 
+
+        
         //name inputwindow
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10, 10, 10, 10));
