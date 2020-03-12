@@ -4,10 +4,13 @@ import com.codecool.quest.Main;
 import com.codecool.quest.logic.actors.Player;
 import com.codecool.quest.logic.actors.Skeleton;
 import com.codecool.quest.logic.actors.Zalgotrax;
-import com.codecool.quest.logic.items.*;
+import com.codecool.quest.logic.doors.BlueDoor;
+import com.codecool.quest.logic.doors.RedDoor;
 import com.codecool.quest.logic.items.Armor;
 import com.codecool.quest.logic.items.Gloryhammer;
 import com.codecool.quest.logic.items.Weapon;
+import com.codecool.quest.logic.items.keys.BlueKey;
+import com.codecool.quest.logic.items.keys.RedKey;
 import com.codecool.quest.logic.path.BackTrack;
 import com.codecool.quest.logic.path.PathWay;
 import javafx.scene.media.Media;
@@ -125,11 +128,19 @@ public class MapLoader {
                             break;
                         case 'k':
                             cell.setType(CellType.FLOOR);
-                            new Key(cell);
+                            new BlueKey(cell);
                             break;
-                        case 'd':
-                            cell.setType(CellType.OPENED_DOOR);
-                            new Door(cell);
+                        case 'j':
+                            cell.setType(CellType.FLOOR);
+                            new RedKey(cell);
+                            break;
+                        case 'x':
+                            cell.setType(CellType.BLUE_OPENED_DOOR);
+                            new BlueDoor(cell);
+                            break;
+                        case 'y':
+                            cell.setType(CellType.RED_OPENED_DOOR);
+                            new RedDoor(cell);
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");

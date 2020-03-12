@@ -1,11 +1,12 @@
-package com.codecool.quest.logic.items;
+package com.codecool.quest.logic.doors;
 
 import com.codecool.quest.logic.Cell;
 import com.codecool.quest.logic.actors.Player;
+import com.codecool.quest.logic.doors.Door;
 
-public class Door extends Item {
+public class RedDoor extends Door {
 
-    public Door(Cell cell) {
+    public RedDoor(Cell cell) {
         super(cell);
     }
 
@@ -16,6 +17,6 @@ public class Door extends Item {
 
     @Override
     public String getTileName() {
-        return "closed_door";
+        return "red_closed_door";
     }
 }

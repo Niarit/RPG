@@ -13,7 +13,8 @@ public enum CellType {
     RUINED_WALL_PIECE("ruined_wall_piece"),
     WINE("wine"),
     FALSE_WALL("false_wall"),
-    OPENED_DOOR("opened_door");
+    BLUE_OPENED_DOOR("blue_opened_door"),
+    RED_OPENED_DOOR("red_opened_door");
 
     private final String tileName;
 
