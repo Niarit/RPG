@@ -1,6 +1,7 @@
 package com.codecool.quest;
 
 import com.codecool.quest.logic.Cell;
+import com.codecool.quest.logic.Dialogue;
 import com.codecool.quest.logic.GameMap;
 import com.codecool.quest.logic.MapLoader;
 import javafx.application.Application;
@@ -24,7 +25,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
-import java.util.List;
 import java.util.Random;
 
 import java.util.ArrayList;
@@ -46,8 +46,8 @@ public class Main extends Application {
     public GraphicsContext contextDialogue;
     public Label healthLabel = new Label();
     public Label damageLabel = new Label();
-    public Label DialogueLabel = new Label();
     public Label playerNameLabel = new Label();
+    public static Label dialogueLabel = new Label();
     public int[][] possibleMovements = {{0,-1},{0,1},{-1,0},{1,0}};
     public Random randomChance = new Random();
 
@@ -102,10 +102,14 @@ public class Main extends Application {
                 500);
         contextInv = canvasInv.getGraphicsContext2D();
 
-        canvasDialogue = new Canvas(
-                50,
-                100);
-        contextDialogue = canvasDialogue.getGraphicsContext2D();
+//        canvasDialogue = new Canvas(
+//                50,
+//                100);
+//        contextDialogue = canvasDialogue.getGraphicsContext2D();
+        GridPane dialogueGrid = new GridPane();
+        dialogueGrid.setPrefWidth(500);
+        dialogueGrid.setPadding(new Insets(30));
+        dialogueGrid.add(dialogueLabel,0,0);
 
         mapLoader.loadMap("/map.txt", System.getProperty("user.dir") + "/src/main/resources/Hootsforce.mp3");
 
@@ -119,8 +123,7 @@ public class Main extends Application {
         borderPane.setCenter(canvasMain);
         borderPane.setRight(vbox);
 
-         HBox Dialogue = new HBox(canvasDialogue);
-         borderPane.setCenter(canvasMain);
+         HBox Dialogue = new HBox(dialogueGrid);
          borderPane.setBottom(Dialogue);
          BackgroundFill myBG = new BackgroundFill(Color.BLACK, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
          borderPane.setBackground(new Background(myBG));
@@ -234,7 +237,8 @@ public class Main extends Application {
                 invCountY++;
             }
         }
-
+        dialogueLabel.setTextFill(Color.WHITE);
+        dialogueLabel.setFont(Font.font("Manaspace", 20));
 
         healthLabel.setTextFill(Color.WHITE);
         damageLabel.setTextFill(Color.WHITE);
@@ -246,6 +250,8 @@ public class Main extends Application {
         playerNameLabel.setText("     " + playerName);
         playerNameLabel.setTextFill(Color.WHITE);
         playerNameLabel.setFont(Font.font("Manaspace", 20));
+
+
 
         if (map.getPlayer().getHealth() <= 0) {
             gameOver();
