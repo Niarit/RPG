@@ -9,10 +9,13 @@ public enum CellType {
     BRIDGE("bridge"),
     TREE("tree"),
     ROCK("rock"),
-    ZALGOTRAX("zalgotrax"),
-    RUINED_WALL_PIECE("ruined_wall_piece"),
+    RUINED_WALL_PIECE_LEFT("ruined_wall_piece_left"),
+    RUINED_WALL_PIECE_RiGHT("ruined_wall_piece_right"),
     WINE("wine"),
     FALSE_WALL("false_wall"),
+    LEFT_CORNER("left_corner"),
+    RIGHT_CORNER("right_corner");
+
     BLUE_OPENED_DOOR("blue_opened_door"),
     RED_OPENED_DOOR("red_opened_door");
 

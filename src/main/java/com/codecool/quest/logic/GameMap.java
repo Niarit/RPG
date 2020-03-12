@@ -2,6 +2,7 @@ package com.codecool.quest.logic;
 
 import com.codecool.quest.logic.actors.Actor;
 import com.codecool.quest.logic.actors.Player;
+import com.codecool.quest.logic.actors.Zalgotrax;
 
 import java.util.List;
 
@@ -48,4 +49,5 @@ public class GameMap {
     public int getHeight() {
         return height;
     }
+
 }
