@@ -86,10 +86,7 @@ public class Main extends Application {
 
         playerNameLabel.setStyle("-fx-font-weight: bold");
         ui.add(playerNameLabel,0,0);
-//         ui.add(new Label("Health: "), 0, 2);
-//         ui.add(healthLabel, 1, 2);
-//         ui.add(new Label("Damage:"), 0, 3);
-//         ui.add(damageLabel, 1, 3);
+
 
         Label inventoryLabel = new Label("Inventory: ");
         inventoryLabel.setFont(Font.font("Manaspace", 20));

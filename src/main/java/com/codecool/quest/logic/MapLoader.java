@@ -4,6 +4,7 @@ import com.codecool.quest.Main;
 import com.codecool.quest.logic.actors.Player;
 import com.codecool.quest.logic.actors.Skeleton;
 import com.codecool.quest.logic.actors.Zalgotrax;
+import com.codecool.quest.logic.actors.Zombie;
 import com.codecool.quest.logic.doors.BlueDoor;
 import com.codecool.quest.logic.doors.RedDoor;
 import com.codecool.quest.logic.items.Armor;
@@ -130,6 +131,16 @@ public class MapLoader {
                             break;
                         case 'f':
                             cell.setType(CellType.FALSE_WALL);
+                            break;
+                        case 'ő':
+                            cell.setType(CellType.BRAZIER);
+                            break;
+                        case 'v':
+                            cell.setType(CellType.SKULL);
+                            break;
+                        case 'h':
+                            cell.setType(CellType.FLOOR);
+                            new Zombie(cell);
                             break;
                         case 'G':
                             cell.setType(CellType.FLOOR);
