@@ -91,7 +91,9 @@ public class Main extends Application {
 //         ui.add(new Label("Damage:"), 0, 3);
 //         ui.add(damageLabel, 1, 3);
 
-        Label inventoryLabel = new Label("      Inventory: ");
+        Label inventoryLabel = new Label("Inventory: ");
+        inventoryLabel.setFont(Font.font("Manaspace", 20));
+        inventoryLabel.setTextFill(Color.WHITE);
         inventoryLabel.setStyle("-fx-font-weight: bold");
         ui.add(inventoryLabel,0,5);
 
@@ -117,18 +119,13 @@ public class Main extends Application {
         borderPane.setCenter(canvasMain);
         borderPane.setRight(vbox);
 
+         HBox Dialogue = new HBox(canvasDialogue);
+         borderPane.setCenter(canvasMain);
+         borderPane.setBottom(Dialogue);
+         BackgroundFill myBG = new BackgroundFill(Color.BLACK, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
+         borderPane.setBackground(new Background(myBG));
 
 
-        HBox Dialogue = new HBox(canvasDialogue);
-        borderPane.setCenter(canvasMain);
-        borderPane.setBottom(Dialogue);
-        BackgroundFill myBG = new BackgroundFill(Color.BLACK, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
-        borderPane.setBackground(new Background(myBG));
-
-        Scene scene = new Scene(borderPane);
-        primaryStage.setScene(scene);
-        refresh();
-        scene.setOnKeyPressed(this::onKeyPressed);
 
         //name inputwindow
         GridPane grid = new GridPane();
@@ -246,8 +243,10 @@ public class Main extends Application {
         healthLabel.setText("" + map.getPlayer().getHealth());
         damageLabel.setText("" + map.getPlayer().getDamage());
 
-        playerNameLabel.setText("           " + playerName);
-      
+        playerNameLabel.setText("     " + playerName);
+        playerNameLabel.setTextFill(Color.WHITE);
+        playerNameLabel.setFont(Font.font("Manaspace", 20));
+
         if (map.getPlayer().getHealth() <= 0) {
             gameOver();
         } else if (map.getPlayer().getX() == 17 && map.getPlayer().getY() == 16){
