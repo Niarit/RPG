@@ -118,17 +118,20 @@ public class Main extends Application {
         borderPane.setRight(vbox);
 
 
+        
 
-        HBox Dialogue = new HBox(canvasDialogue);
-        borderPane.setCenter(canvasMain);
-        borderPane.setBottom(Dialogue);
-        BackgroundFill myBG = new BackgroundFill(Color.BLACK, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
-        borderPane.setBackground(new Background(myBG));
 
-        Scene scene = new Scene(borderPane);
-        primaryStage.setScene(scene);
-        refresh();
-        scene.setOnKeyPressed(this::onKeyPressed);
+//         HBox Dialogue = new HBox(canvasDialogue);
+//         borderPane.setCenter(canvasMain);
+//         borderPane.setBottom(Dialogue);
+//         BackgroundFill myBG = new BackgroundFill(Color.BLACK, new CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));
+//         borderPane.setBackground(new Background(myBG));
+
+//         Scene scene = new Scene(borderPane);
+//         primaryStage.setScene(scene);
+//         refresh();
+//         scene.setOnKeyPressed(this::onKeyPressed);
+
 
         //name inputwindow
         GridPane grid = new GridPane();
