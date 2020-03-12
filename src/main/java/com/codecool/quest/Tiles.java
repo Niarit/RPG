@@ -51,7 +51,7 @@ public class Tiles {
         tileMap.put("left_corner", new Tile(0,12));
         tileMap.put("false_wall", new Tile(1,2));
         tileMap.put("wine", new Tile(1,2));
-        tileMap.put("Gloryhammer", new Tile(5,29));
+        tileMap.put("Gloryhammer", new Tile(6,29));
         tileMap.put("blueKey", new Tile(17,23));
         tileMap.put("blue_opened_door",new Tile(2,9));
         tileMap.put("blue_closed_door",new Tile(1,9));

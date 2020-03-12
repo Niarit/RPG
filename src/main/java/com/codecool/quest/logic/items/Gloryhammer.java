@@ -16,7 +16,7 @@ public class Gloryhammer extends Item {
     @Override
     public void pickUp(Player player) {
         if (Main.items.size() < 9) {
-            new Dialogue("Picked up Gloryhammer");
+            new Dialogue("Picked up the Gloryhammer");
             player.setDamage(player.getDamage() + damage);
             player.setHealth(player.getHealth() + health);
             Main.items.add("Gloryhammer");
